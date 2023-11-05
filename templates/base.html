@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<link rel="stylesheet" href="{% static 'main.css' %}">
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    {% load bootstrap5 %}{% bootstrap_css %}{% bootstrap_javascript %}
+  </head>
+  <body>
+    <div id="page_title"><h2>CosEvent</h2></div>
+    <div class="container sticky-top">
+      <ul class="navbar navbar-expand-xl navbar-dark bg-dark">
+        <li class="nav-item">
+          <a class="nav-link link-light" href="{% url 'event_list' %}">Events</a>
+        </li>
+      </ul>
+    </div>
+    <div id="section_title">{% block section_title %}{% endblock %}</div>
+    <div id="content">{% block content %}{% endblock %}</div>
+  </body>
+</html>
