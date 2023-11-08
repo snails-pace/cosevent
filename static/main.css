@@ -1,0 +1,35 @@
+.navbar {
+    background-color: black;
+    margin-bottom: 3rem;
+}
+
+
+#page_title {
+    padding-top: 5rem;
+    padding-bottom: 0.5rem;
+    background-image: url('img/fern2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+    color: rgb(193, 241, 178);
+}
+
+#page_title>h2 {
+    background-color: rgba(59, 114, 37, 0.6);
+    padding: 0.3rem;
+}
+
+#section_title,
+#content {
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.card {
+    margin-bottom: 1rem;
+}
+
+.event-name {
+    font-weight: bold;
+}

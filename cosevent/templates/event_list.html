@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}Events{% endblock %}
+
+{% block section_title %}
+<h2>Events</h2>
+{% endblock %}
+
+{% block content %}
+<!--Creates a list of events with a bootstrap card style and a flexbox as card-card body with the infos in it.
+Source: https://getbootstrap.com/docs/5.0/utilities/flex/-->
+{% for event in event_list %}
+<div class="card">
+    <div class="card-body d-flex bd-highlight flex-row">
+        <div class="p-2 flex-grow-1 bd-highlight event-name">{{ event.name }}</div>
+        <div class="p-2 bd-highlight">{{ event.date }}</div>
+        <div class="p-2 bd-highlight">{{ event.venue }}</div>
+        <a href="{% url 'event_list' %}" class="stretched-link"></a>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
