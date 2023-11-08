@@ -11,5 +11,9 @@ class EventListView(generic.ListView):
     context_object_name = 'event_list'
     template_name = 'event_list.html'
 
-class EventView(TemplateView):
-    template_name = "event.html"
+
+class EventView(generic.DeleteView):
+    model = Event
+    context_object_name = 'event'
+    template_name = 'event.html'
+
