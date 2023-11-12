@@ -1,29 +1,31 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from cosevent.models import Event
+from cosevent.models import Event, User
+
 
 class DateInput(forms.DateInput):
     input_type = 'date'
 
 
 class CustomModelChoiceField(forms.ModelChoiceField):
-    def label_from_instance(self, event):
-        return event.id
+    def label_from_instance(self, user):
+        return user.username
 
 
 class UpdateEventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['id', 'name', 'date', 'venue', 'category', 'availability', 'artist_name']
+        fields = ['name', 'date', 'venue', 'category', 'availability', 'artist_name']
 
         widgets = {
             'date': DateInput()
         }
 
-        def clean_name(self):
-            name = self.cleaned_data['name']
+        owner = CustomModelChoiceField(
+            queryset=User.objects.all(),
+            widget=forms.Select(attrs={'class': 'form-control'}),
+            to_field_name='username',
+            label='Owner'
+        )
 
-            if name.length < 0:
-                raise ValidationError("The name must have at least one character")
-            return name

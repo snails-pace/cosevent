@@ -15,7 +15,7 @@
             <p>Date: {{ event.date }}</p>
             <p>Location: {{ event.venue }}</p>
             <p>No. of tickets available: {{ event.availability }}</p>
-            <a class="btn btn-primary">Edit</a>
+            <a href="{% url 'update_event' event.id %}" class="btn btn-primary">Edit</a>
             <a class="btn btn-danger">Delete</a>
         </div>
     </div>
