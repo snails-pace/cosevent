@@ -49,3 +49,12 @@ class CreateEventView(SuccessMessageMixin, generic.CreateView):
         submitted_date = form.cleaned_data
 
         return super().form_valid(form)
+
+
+class DeleteEventView(SuccessMessageMixin, generic.DeleteView):
+    model = Event
+    context_object_name = 'event'
+    template_name = 'delete_event.html'
+    success_url = reverse_lazy('event_list')
+    success_message = 'Event deleted'
+
