@@ -4,8 +4,8 @@ from django.core.exceptions import ValidationError
 from cosevent.models import Event, User
 
 
-class DateInput(forms.DateInput):
-    input_type = 'date'
+class DateTimeInput(forms.DateTimeInput):
+    input_type = 'datetime-local'
 
 
 class CustomModelChoiceField(forms.ModelChoiceField):
@@ -19,7 +19,7 @@ class UpdateEventForm(forms.ModelForm):
         fields = ['name', 'date', 'venue', 'category', 'availability', 'artist_name']
 
         widgets = {
-            'date': DateInput()
+            'date': DateTimeInput()
         }
 
         owner = CustomModelChoiceField(

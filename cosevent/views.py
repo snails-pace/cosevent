@@ -35,3 +35,17 @@ class UpdateEventView(SuccessMessageMixin, generic.UpdateView):
         
         return super().form_valid(form)
 
+
+class CreateEventView(SuccessMessageMixin, generic.CreateView):
+    model = Event
+    form_class = UpdateEventForm
+    template_name = 'create_event.html'
+    success_message = 'Your event %(name)s was saved'
+
+    def get_success_url(self):
+        return reverse_lazy('event', args=[self.object.pk])
+
+    def form_valid(self, form):
+        submitted_date = form.cleaned_data
+
+        return super().form_valid(form)

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
 
-{% block title %}Update{% endblock %}
+{% block title %}Event Creation{% endblock %}
 
 {% block section_title %}
-    <h2>Update Event</h2>
+    <h2>Create an Event</h2>
 {% endblock %}
 
 {% block content %}
@@ -12,6 +12,6 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button class="btn btn-success" type="submit">Save</button>
-    <a class="btn btn-secondary" href="{% url 'event' event.id %}" type="button">Cancel</a>
+        <a class="btn btn-secondary" href="{% url 'event_list' %}" type="button">Cancel</a>
     </form>
 {% endblock %}
