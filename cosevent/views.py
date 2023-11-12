@@ -1,3 +1,4 @@
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import generic
@@ -20,10 +21,11 @@ class EventView(generic.DetailView):
     template_name = 'event.html'
 
 
-class UpdateEventView(generic.UpdateView):
+class UpdateEventView(SuccessMessageMixin, generic.UpdateView):
     model = Event
     form_class = UpdateEventForm
     template_name = 'update_event.html'
+    success_message = 'Your event %(name)s was saved'
 
     def get_success_url(self):
         return reverse_lazy('event', args=[self.object.pk])
