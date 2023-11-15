@@ -65,7 +65,6 @@ def create_event_view(request):
         if event_form.is_valid():
             event_form.save()
             return redirect('event_list')
-
     else:
         event_form = UpdateEventForm()
 

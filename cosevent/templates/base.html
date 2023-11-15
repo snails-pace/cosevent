@@ -19,13 +19,13 @@
         </li>
       </ul>
     </div>
-    <div id="content-container">
+    <div id="content-container" class="container">
         {% if messages %}
             {% for message in messages %}
             <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
             {% endfor %}
         {% endif %}
-        <div id="section_title">{% block section_title %}{% endblock %}</div>
+        <div id="section_title" class="mb-3">{% block section_title %}{% endblock %}</div>
         <div id="content">{% block content %}{% endblock %}</div>
     </div>
   </body>
