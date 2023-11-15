@@ -22,10 +22,15 @@ class UpdateEventForm(forms.ModelForm):
             'date': DateTimeInput()
         }
 
-        owner = CustomModelChoiceField(
-            queryset=User.objects.all(),
-            widget=forms.Select(attrs={'class': 'form-control'}),
-            to_field_name='username',
-            label='Owner'
-        )
+        def clean_name(self):
+            name = self.cleaned_data['name']
+            if name.isEmpty():
+                raise ValidationError("The name is required!")
+
+        # owner = CustomModelChoiceField(
+        #     queryset=User.objects.all(),
+        #     widget=forms.Select(attrs={'class': 'form-control'}),
+        #     to_field_name='username',
+        #     label='Owner'
+        # )
 

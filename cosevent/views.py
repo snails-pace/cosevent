@@ -1,5 +1,5 @@
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.views.generic import TemplateView
@@ -36,19 +36,19 @@ class UpdateEventView(SuccessMessageMixin, generic.UpdateView):
         return super().form_valid(form)
 
 
-class CreateEventView(SuccessMessageMixin, generic.CreateView):
-    model = Event
-    form_class = UpdateEventForm
-    template_name = 'create_event.html'
-    success_message = 'Your event %(name)s was saved'
-
-    def get_success_url(self):
-        return reverse_lazy('event', args=[self.object.pk])
-
-    def form_valid(self, form):
-        submitted_date = form.cleaned_data
-
-        return super().form_valid(form)
+# class CreateEventView(SuccessMessageMixin, generic.CreateView):
+#     model = Event
+#     form_class = UpdateEventForm
+#     template_name = 'create_event.html'
+#     success_message = 'Your event %(name)s was saved'
+#
+#     def get_success_url(self):
+#         return reverse_lazy('event', args=[self.object.pk])
+#
+#     def form_valid(self, form):
+#         submitted_date = form.cleaned_data
+#
+#         return super().form_valid(form)
 
 
 class DeleteEventView(SuccessMessageMixin, generic.DeleteView):
@@ -58,3 +58,17 @@ class DeleteEventView(SuccessMessageMixin, generic.DeleteView):
     success_url = reverse_lazy('event_list')
     success_message = 'Event deleted'
 
+
+def create_event_view(request):
+    if request.method == 'POST':
+        event_form = UpdateEventForm(request.POST)
+        if event_form.is_valid():
+            event_form.save()
+            return redirect('event_list')
+
+    else:
+        event_form = UpdateEventForm()
+
+    context = {'form': event_form}
+    context['title'] = 'Create Event'
+    return render(request, 'create_event.html', context)
