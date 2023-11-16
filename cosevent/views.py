@@ -71,3 +71,5 @@ def create_event_view(request):
     context = {'form': event_form}
     context['title'] = 'Create Event'
     return render(request, 'create_event.html', context)
+
+

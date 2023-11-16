@@ -22,10 +22,14 @@ class UpdateEventForm(forms.ModelForm):
             'date': DateTimeInput()
         }
 
-        def clean_name(self):
-            name = self.cleaned_data['name']
-            if name.isEmpty():
-                raise ValidationError("The name is required!")
+    def clean_date(self):
+        input_date = self.cleaned_data['date']
+
+        all_events = Event.objects.filter(date__date=input_date.date())
+        if all_events:
+            raise ValidationError("Sorry, the venue is booked at this date!")
+        return input_date
+
 
         # owner = CustomModelChoiceField(
         #     queryset=User.objects.all(),
