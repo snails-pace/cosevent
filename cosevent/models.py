@@ -1,11 +1,7 @@
 from django.db import models
 
 
-# Create your models here.
-class User(models.Model):
-    username = models.CharField(max_length=255, unique=True)
-    email = models.EmailField(max_length=254, unique=True)
-    password = models.CharField(max_length=50)
+# Create your models here
 
 
 class Event(models.Model):
@@ -15,4 +11,8 @@ class Event(models.Model):
     category = models.CharField(max_length=255)
     availability = models.PositiveIntegerField()
     artist_name = models.CharField(max_length=255)
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=255)
 

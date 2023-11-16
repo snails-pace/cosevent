@@ -1,11 +1,11 @@
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.views.generic import TemplateView
 
-from cosevent.forms import UpdateEventForm
-from cosevent.models import Event
+from cosevent.forms import UpdateEventForm, UpdateCategoryForm
+from cosevent.models import Event, Category
 
 
 # Create your views here.
@@ -73,3 +73,31 @@ def create_event_view(request):
     return render(request, 'create_event.html', context)
 
 
+def category_list_view(request):
+    categories = Category.objects.all()
+    context = {'category_list': categories}
+
+    return render(request, 'category_list.html', context)
+
+
+def create_category_view(request):
+    if request.method == 'POST':
+        category_form = UpdateCategoryForm(request.POST)
+        if category_form.is_valid():
+            category_form.save()
+            return redirect('category_list')
+    else:
+        category_form = UpdateCategoryForm()
+
+    context = {'form': category_form, 'title': 'Create Category'}
+    return render(request, 'category_create.html', context)
+
+
+def category_delete_view(request, pk):
+    category = get_object_or_404(Category, id=pk)
+    if request.method == 'POST':
+        category.delete()
+        return redirect('category_list')
+
+    context = {'category': category}
+    return render(request, 'category_delete.html', context)

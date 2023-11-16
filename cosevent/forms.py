@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from cosevent.models import Event, User
+from cosevent.models import Event, Category
 
 
 class DateTimeInput(forms.DateTimeInput):
@@ -25,8 +25,8 @@ class UpdateEventForm(forms.ModelForm):
     def clean_date(self):
         input_date = self.cleaned_data['date']
 
-        all_events = Event.objects.filter(date__date=input_date.date())
-        if all_events:
+        events = Event.objects.filter(date__date=input_date.date())
+        if events:
             raise ValidationError("Sorry, the venue is booked at this date!")
         return input_date
 
@@ -38,3 +38,16 @@ class UpdateEventForm(forms.ModelForm):
         #     label='Owner'
         # )
 
+class UpdateCategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name']
+
+    def clean_name(self):
+        input_name = self.cleaned_data['name']
+
+        names = Category.objects.filter(name__iexact=input_name)
+        if names:
+            raise ValidationError("Category already exists!")
+
+        return input_name.capitalize()

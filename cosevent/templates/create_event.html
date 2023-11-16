@@ -8,22 +8,5 @@
 {% endblock %}
 
 {% block content %}
-    <form method="post" >
-        {% csrf_token %}
-{#        {{ form }}#}
-        {% for f_field in form %}
-            <div class="mb-3">
-                <label for="{{ f_field.id_for_label }}" class="form-label">{{ f_field.label }}:</label>
-                <input id="{{ f_field.id_for_label }}"
-                type="{{ f_field.field.widget.input_type }}"
-                value="{{ f_field.value | default_if_none:'' }}"
-                name="{{ f_field.html_name }}"
-                class="form-control {% if form.is_bound %}{% if not f_field.errors %}is-valid{% else %}is-invalid{% endif %}{% endif %}"
-                aria-describedby="invalid-{{ f_field.id_for_label }}">
-                <div id="invalid-{{ f_field.id_for_label }}" class="invalid-feedback">{{ f_field.errors }}</div>
-            </div>
-        {% endfor %}
-        <button class="btn btn-success" type="submit">Save</button>
-        <a class="btn btn-secondary" href="{% url 'event_list' %}" type="button">Cancel</a>
-    </form>
+{% include 'input_form.html' with redirect_url='event_list'%}
 {% endblock %}
