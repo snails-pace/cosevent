@@ -6,7 +6,8 @@ from django.db import models
 
 class Event(models.Model):
     name = models.CharField(max_length=255)
-    date = models.DateTimeField()
+    date = models.DateField()
+    description = models.TextField(blank=True)
     venue = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
     availability = models.PositiveIntegerField()

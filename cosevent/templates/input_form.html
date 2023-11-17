@@ -1,5 +1,8 @@
 <form method="post" >
     {% csrf_token %}
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">{{ form.non_field_errors }}</div>
+    {% endif %}
     {% for f_field in form %}
         <div class="mb-3">
             <label for="{{ f_field.id_for_label }}" class="form-label">{{ f_field.label }}:</label>
