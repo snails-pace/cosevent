@@ -6,15 +6,18 @@
     {% for f_field in form %}
         <div class="mb-3">
             <label for="{{ f_field.id_for_label }}" class="form-label">{{ f_field.label }}:</label>
+            {# See if f_field is from type select and then add select instead of input #}
             {% if f_field.field.widget.input_type == 'select' %}
                 <select id="{{ f_field.id_for_label }}"
                 name="{{ f_field.html_name }}"
                 class="form-select {% if form.is_bound %}{% if not f_field.errors %}is-valid{% else %}is-invalid{% endif %}{% endif %}"
                 aria-describedby="invalid-{{ f_field.id_for_label }}">
                 {# https://stackoverflow.com/questions/36724255/render-choicefield-options-in-django-template #}
-                {% for value, name in f_field.field.choices %}
-                    <option value="{{ value }}">{{ name }}</option>
-                {% endfor %}
+                {# iterate over subwidgets to get the opions for the select field #}
+                    {% for widget in f_field.subwidgets %}
+                        {{ widget }}
+                    {% endfor %}
+                {# {% for value, name in f_field.field.choices %}<option value="{{ value }}">{{ name }}</option>{% endfor %} #}
                 </select>
             {% else %}
             <input id="{{ f_field.id_for_label }}"

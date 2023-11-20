@@ -73,6 +73,20 @@ def create_event_view(request):
     return render(request, 'create_event.html', context)
 
 
+def update_event_view(request):
+    if request.method == 'POST':
+        event_form = UpdateEventForm(request.POST)
+        if event_form.is_valid():
+            event_form.save()
+            return redirect('event_list')
+    else:
+        event_form = UpdateEventForm()
+
+    context = {'form': event_form}
+    context['title'] = 'Update Event'
+    return render(request, 'update_event.html', context)
+
+
 def category_list_view(request):
     categories = Category.objects.all()
     context = {'category_list': categories}

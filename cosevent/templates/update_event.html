@@ -8,10 +8,5 @@
 {% endblock %}
 
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-success" type="submit">Save</button>
-    <a class="btn btn-secondary" href="{% url 'event' event.id %}" type="button">Cancel</a>
-    </form>
+{% include 'input_form.html' with redirect_view='event_list'%}
 {% endblock %}
