@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.forms import ModelChoiceField
 
 from cosevent.models import Event, Category
 
@@ -8,10 +9,6 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 
-class CustomModelChoiceField(forms.ModelChoiceField):
-    def label_from_instance(self, user):
-        return user.username
-
 
 class UpdateEventForm(forms.ModelForm):
     class Meta:
@@ -19,7 +16,8 @@ class UpdateEventForm(forms.ModelForm):
         fields = ['name', 'date', 'venue', 'category', 'availability', 'artist_name', 'description']
 
         widgets = {
-            'date': DateInput()
+            'date': DateInput(),
+           # 'category': ModelChoiceField(queryset=Category.objects.all())
         }
 
     def clean_description(self):
@@ -30,13 +28,15 @@ class UpdateEventForm(forms.ModelForm):
         return input_description
 
     def clean(self):
-        input_date = self.cleaned_data['date']
-        input_venue = self.cleaned_data['venue']
+        try:
+            input_date = self.cleaned_data['date']
+            input_venue = self.cleaned_data['venue']
 
-        events = Event.objects.filter(date__exact=input_date, venue__iexact=input_venue)
-        if events:
-            raise ValidationError("Sorry, the venue is booked at this date!")
-
+            events = Event.objects.filter(date__exact=input_date, venue__iexact=input_venue)
+            if events:
+                raise ValidationError("Sorry, the venue is booked at this date!")
+        except KeyError:
+            pass
 
 
         # owner = CustomModelChoiceField(
