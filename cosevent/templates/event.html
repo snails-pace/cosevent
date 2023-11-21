@@ -16,8 +16,8 @@
             <p>Date: {{ event.date }}</p>
             <p>Location: {{ event.venue }}</p>
             <p>No. of tickets available: {{ event.availability }}</p>
-            <a href="{% url 'update_event' event.id %}" class="btn btn-primary">Edit</a>
-            <a href="{% url 'delete_event' event.id %}" class="btn btn-danger">Delete</a>
+            <a href="{% url 'event_update' event.id %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'event_delete' event.id %}" class="btn btn-danger">Delete</a>
         </div>
     </div>
 

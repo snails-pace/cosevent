@@ -6,11 +6,14 @@ from cosevent.models import Event, Category
 
 
 class DateInput(forms.DateInput):
+    # date input class for widgets
     input_type = 'date'
 
 
 
 class UpdateEventForm(forms.ModelForm):
+    # Form to update Event
+    # Display all fields except id with date as DateInput widget
     class Meta:
         model = Event
         fields = ['name', 'date', 'venue', 'category', 'availability', 'artist_name', 'description']
@@ -21,6 +24,7 @@ class UpdateEventForm(forms.ModelForm):
         }
 
     def clean_description(self):
+        # Raises error if description text is longer than 400 chars
         input_description = self.cleaned_data['description']
 
         if len(input_description) > 400:
@@ -28,6 +32,8 @@ class UpdateEventForm(forms.ModelForm):
         return input_description
 
     def clean(self):
+        # Raises error if date and venue are the same (the venue is booked at this date)
+        # therefore searches in the database with filter to find matching entries
         try:
             input_date = self.cleaned_data['date']
             input_venue = self.cleaned_data['venue']
@@ -47,11 +53,15 @@ class UpdateEventForm(forms.ModelForm):
         # )
 
 class UpdateCategoryForm(forms.ModelForm):
+    # Form to update Category
+    # Displays name field
     class Meta:
         model = Category
         fields = ['name']
 
     def clean_name(self):
+        # Raises error if the category name exists in the database to avoid duplicates
+        # Capitalizes category name
         input_name = self.cleaned_data['name']
 
         names = Category.objects.filter(name__iexact=input_name)

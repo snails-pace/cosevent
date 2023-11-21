@@ -24,7 +24,7 @@ class EventView(generic.DetailView):
 class UpdateEventView(SuccessMessageMixin, generic.UpdateView):
     model = Event
     form_class = UpdateEventForm
-    template_name = 'update_event.html'
+    template_name = 'event_update.html'
     success_message = 'Your event %(name)s was saved'
 
     def get_success_url(self):
@@ -54,7 +54,7 @@ class UpdateEventView(SuccessMessageMixin, generic.UpdateView):
 class DeleteEventView(SuccessMessageMixin, generic.DeleteView):
     model = Event
     context_object_name = 'event'
-    template_name = 'delete_event.html'
+    template_name = 'event_delete.html'
     success_url = reverse_lazy('event_list')
     success_message = 'Event deleted'
 
@@ -84,7 +84,7 @@ def update_event_view(request):
 
     context = {'form': event_form}
     context['title'] = 'Update Event'
-    return render(request, 'update_event.html', context)
+    return render(request, 'event_update.html', context)
 
 
 def category_list_view(request):
