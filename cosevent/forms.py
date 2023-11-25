@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import ModelChoiceField
 
-from cosevent.models import Event, Category
+from cosevent.models import Event, Category, User
 
 
 class DateInput(forms.DateInput):

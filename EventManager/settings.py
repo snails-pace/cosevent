@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'cosevent.apps.CoseventConfig',
     'bootstrap5'
 ]
+# https://stackoverflow.com/questions/53920238/django-setting-auth-user-model
+AUTH_USER_MODEL = 'cosevent.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
