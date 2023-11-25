@@ -19,6 +19,7 @@ class Profile(models.Model):
     nickname = models.CharField(max_length=255)
     birthdate = models.DateField(null=True)
 
+
 class Category(models.Model):
     # Category model with name as string representation
     name = models.CharField(max_length=255)
@@ -39,7 +40,7 @@ class Event(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     availability = models.PositiveIntegerField()
     artist_name = models.CharField(max_length=255)
-    #owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

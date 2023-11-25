@@ -36,6 +36,7 @@ class UpdateEventView(SuccessMessageMixin, generic.UpdateView):
         return super().form_valid(form)
 
 
+
 # class CreateEventView(SuccessMessageMixin, generic.CreateView):
 #     model = Event
 #     form_class = UpdateEventForm

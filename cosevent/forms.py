@@ -9,6 +9,9 @@ class DateInput(forms.DateInput):
     # date input class for widgets
     input_type = 'date'
 
+class CustomModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, user):
+        return user.username
 
 
 class UpdateEventForm(forms.ModelForm):
@@ -16,12 +19,18 @@ class UpdateEventForm(forms.ModelForm):
     # Display all fields except id with date as DateInput widget
     class Meta:
         model = Event
-        fields = ['name', 'date', 'venue', 'category', 'availability', 'artist_name', 'description']
+        fields = ['name', 'date', 'venue', 'category', 'availability', 'artist_name', 'description', 'owner']
 
         widgets = {
             'date': DateInput(),
-           # 'category': ModelChoiceField(queryset=Category.objects.all())
         }
+
+        owner = CustomModelChoiceField(
+            queryset=User.objects.all(),
+            widget=forms.Select(attrs={'class': 'form-control'}),
+            to_field_name='username',
+            label='Owner'
+        )
 
     def clean_description(self):
         # Raises error if description text is longer than 400 chars
