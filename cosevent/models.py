@@ -17,6 +17,7 @@ class User(AbstractUser):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nickname = models.CharField(max_length=255)
+    birthdate = models.DateField(null=True)
 
 class Category(models.Model):
     # Category model with name as string representation
