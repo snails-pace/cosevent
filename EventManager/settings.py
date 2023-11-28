@@ -43,6 +43,9 @@ INSTALLED_APPS = [
 # https://stackoverflow.com/questions/53920238/django-setting-auth-user-model
 AUTH_USER_MODEL = 'cosevent.User'
 
+# Overwrite django standard login path to profile, now to mainpage
+LOGIN_REDIRECT_URL = '/'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

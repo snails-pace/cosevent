@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -5,7 +6,7 @@ from django.views import generic
 from django.views.generic import TemplateView
 
 from cosevent.forms import UpdateEventForm, UpdateCategoryForm
-from cosevent.models import Event, Category
+from cosevent.models import Event, Category, Profile
 
 
 # Create your views here.
@@ -21,26 +22,26 @@ class EventView(generic.DetailView):
     template_name = 'event.html'
 
 
-class UpdateEventView(SuccessMessageMixin, generic.UpdateView):
-    model = Event
-    form_class = UpdateEventForm
-    template_name = 'event_update.html'
-    success_message = 'Your event %(name)s was saved'
-
-    def get_success_url(self):
-        return reverse_lazy('event', args=[self.object.pk])
-    
-    def form_valid(self, form):
-        submitted_date = form.cleaned_data
-        
-        return super().form_valid(form)
+# class UpdateEventView(SuccessMessageMixin, generic.UpdateView):
+#     model = Event
+#     form_class = UpdateEventForm
+#     template_name = 'event_update.html'
+#     success_message = 'Your event %(name)s was saved'
+#
+#     def get_success_url(self):
+#         return reverse_lazy('event', args=[self.object.pk])
+#
+#     def form_valid(self, form):
+#         submitted_date = form.cleaned_data
+#
+#         return super().form_valid(form)
 
 
 
 # class CreateEventView(SuccessMessageMixin, generic.CreateView):
 #     model = Event
 #     form_class = UpdateEventForm
-#     template_name = 'create_event.html'
+#     template_name = 'event_create.html'
 #     success_message = 'Your event %(name)s was saved'
 #
 #     def get_success_url(self):
@@ -59,7 +60,7 @@ class DeleteEventView(SuccessMessageMixin, generic.DeleteView):
     success_url = reverse_lazy('event_list')
     success_message = 'Event deleted'
 
-
+@login_required
 def create_event_view(request):
     if request.method == 'POST':
         event_form = UpdateEventForm(request.POST)
@@ -67,13 +68,14 @@ def create_event_view(request):
             event_form.save()
             return redirect('event_list')
     else:
-        event_form = UpdateEventForm()
+        profile_id = Profile.objects.get(user=request.user).id
+        event_form = UpdateEventForm(initial={'owner':profile_id})
 
     context = {'form': event_form}
     context['title'] = 'Create Event'
-    return render(request, 'create_event.html', context)
+    return render(request, 'event_create.html', context)
 
-
+@login_required
 def update_event_view(request):
     if request.method == 'POST':
         event_form = UpdateEventForm(request.POST)

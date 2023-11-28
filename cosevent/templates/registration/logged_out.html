@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}Logout{% endblock %}
+
+{% block section_title %}
+<h2>Logout</h2>
+{% endblock %}
+
+{% block content %}
+    <p>Logged out!</p>
+    <a href="{% url 'login' %}">Login</a>
+{% endblock %}

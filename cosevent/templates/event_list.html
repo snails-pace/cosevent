@@ -4,7 +4,12 @@
 {% block title %}Events{% endblock %}
 
 {% block section_title %}
-<h2>Events</h2>
+    <div class="container">
+        <div class="row">
+            <h2 class="col-auto me-auto">Events</h2>
+            <div class="col-auto"><a class="btn btn-secondary" href="{% url 'event_create' %}">New</a></div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block content %}
@@ -21,3 +26,5 @@ Source: https://getbootstrap.com/docs/5.0/utilities/flex/-->
 </div>
 {% endfor %}
 {% endblock %}
+
+

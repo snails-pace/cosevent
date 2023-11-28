@@ -8,7 +8,9 @@ class User(AbstractUser):
     # email and username have to be unique
     # returns username as string representation
     email = models.EmailField(unique=True)
-    username = models.CharField(max_length=100, unique=True)
+    REQUIRED_FIELDS = []
+    # takes email instead of username for login:
+    USERNAME_FIELD = 'email'
 
     def __str__(self):
         return self.username
@@ -19,6 +21,8 @@ class Profile(models.Model):
     nickname = models.CharField(max_length=255)
     birthdate = models.DateField(null=True)
 
+    def __str__(self):
+        return self.nickname
 
 class Category(models.Model):
     # Category model with name as string representation

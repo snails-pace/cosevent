@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from cosevent import models
-from cosevent.models import Event, Category, User
+from cosevent.models import Event, Category, User, Profile
 
 
 # Register your models here.
@@ -27,5 +27,12 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
-    ordering = ['username']
+    ordering = ['email']
+    list_per_page = 10
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ['id', 'nickname', 'birthdate']
+    list_editable = ['nickname', 'birthdate']
+    ordering = ['nickname']
     list_per_page = 10
