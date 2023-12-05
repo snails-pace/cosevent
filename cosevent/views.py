@@ -184,3 +184,20 @@ def category_delete_view(request, pk):
 
     context = {'category': category}
     return render(request, 'category_delete.html', context)
+
+
+def cart_view(request):
+
+    tickets = request.session['tickets']
+    context = {'session': request.session}
+
+    return render(request, 'cart.html', context)
+
+
+def add_to_cart_view(request, pk):
+    event = Event.objects.get(id=pk)
+    if 'tickets' not in request.session:
+        request.session['tickets'] = []
+
+    request.session['tickets'] += {'event_id': pk, 'name': event.name, 'price': event.price, 'count': 1}
+    return render(request, 'cart.html')

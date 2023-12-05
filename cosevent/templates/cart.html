@@ -14,12 +14,13 @@
 {% block content %}
 <!--Creates a list of events with a bootstrap card style and a flexbox as card-card body with the infos in it.
 Source: https://getbootstrap.com/docs/5.0/utilities/flex/-->
-{% for ticket in event_list %}
+{% for ticket in session.tickets %}
 <div class="card">
     <div class="card-body d-flex bd-highlight flex-row">
-        <div class="p-2 flex-grow-1 bd-highlight event-name">{{ event.name }}</div>
-        <div class="p-2 bd-highlight">{{ event.venue }}</div>
-        <div class="p-2 bd-highlight">{{ event.date }}</div>
+        <div class="p-2 flex-grow-1 bd-highlight event-name">{{ ticket.name }}</div>
+        <div class="p-2 bd-highlight">{{ event.count }}</div>
+        <div class="p-2 bd-highlight">{{ ticket.price }}</div>
+        <div class="p-2 bd-highlight">Sum Price</div>
         <a href="{% url 'event' event.id %}" class="stretched-link"></a>
     </div>
 </div>

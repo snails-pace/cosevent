@@ -20,7 +20,7 @@
                 <a href="{% url 'event_update' event.id %}" class="btn btn-primary">Edit</a>
                 <a href="{% url 'event_delete' event.id %}" class="btn btn-danger">Delete</a>
             {% endif %}
-                <a href="{% url 'ticketing' event.id %}" class="btn btn-danger">Add to cart</a>
+                <a href="{% url 'add_to_cart' event.id %}" class="btn btn-danger">Add to cart</a>
 
         </div>
     </div>
