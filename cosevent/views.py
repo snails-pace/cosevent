@@ -23,7 +23,7 @@ class EventListView(generic.ListView):
 def event_list_view(request):
 
     events = Event.objects.all()
-    context = {'event_list': events}
+    context = {'event_list': events, 'my_view': False}
     return render(request, 'event_list.html', context)
 
 
@@ -40,14 +40,22 @@ def my_event_list_view(request):
     else:
         user_events = Event.objects.all()
 
-    context = {'event_list': user_events}
+    context = {'event_list': user_events, 'my_view': True}
     return render(request, 'event_list.html', context)
 
 
-class EventView(generic.DetailView):
-    model = Event
-    context_object_name = 'event'
-    template_name = 'event.html'
+def event_view(request, pk):
+    event = get_object_or_404(Event, id=pk)
+    context = {'event': event, 'is_owner': False}
+
+    logged_in_user = request.user
+
+    if logged_in_user:
+        profile_id = Profile.objects.get(user=logged_in_user).id
+        if profile_id == event.owner_id:
+            context['is_owner'] = True
+
+    return render(request, 'event.html', context)
 
 
 # class UpdateEventView(SuccessMessageMixin, generic.UpdateView):
@@ -135,7 +143,7 @@ def update_event_view(request, pk):
         else:
             pass
 
-        return redirect('event_list', pk)
+        return redirect('my_events', pk)
     else:
 
         event_form = UpdateEventForm(instance=event)
