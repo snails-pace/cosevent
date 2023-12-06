@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms import ModelChoiceField
+from django.forms import ModelChoiceField, DecimalField
 
 from cosevent.models import Event, Category, User
 
@@ -19,7 +19,7 @@ class UpdateEventForm(forms.ModelForm):
     # Display all fields except id with date as DateInput widget
     class Meta:
         model = Event
-        fields = ['name', 'date', 'venue', 'category', 'availability', 'artist_name', 'description', 'owner']
+        fields = ['name', 'date', 'venue', 'category', 'availability', 'artist_name', 'description', 'price', 'owner']
 
         widgets = {
             'date': DateInput(),

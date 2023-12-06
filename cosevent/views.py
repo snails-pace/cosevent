@@ -50,7 +50,7 @@ def event_view(request, pk):
 
     logged_in_user = request.user
 
-    if logged_in_user:
+    if logged_in_user and not logged_in_user.is_anonymous:
         profile_id = Profile.objects.get(user=logged_in_user).id
         if profile_id == event.owner_id:
             context['is_owner'] = True
@@ -188,16 +188,29 @@ def category_delete_view(request, pk):
 
 def cart_view(request):
 
-    tickets = request.session['tickets']
-    context = {'session': request.session}
+    cart = request.session['cart']
+    tickets = []
+    total_price = 0
+    for key, value in cart.items():
+        event = Event.objects.get(id=key)
+        sum_price = value['count'] * event.price
+        tickets.append({'event_id': event.id, 'name': event.name, 'price': event.price, 'count': value['count'], 'sum': sum_price})
+        total_price += sum_price
+
+    context = {'session': request.session, 'tickets': tickets, 'total_price': total_price}
 
     return render(request, 'cart.html', context)
 
 
 def add_to_cart_view(request, pk):
-    event = Event.objects.get(id=pk)
-    if 'tickets' not in request.session:
-        request.session['tickets'] = []
+    pk = str(pk)
+    if 'cart' not in request.session:
+        request.session['cart'] = {}
 
-    request.session['tickets'] += {'event_id': pk, 'name': event.name, 'price': event.price, 'count': 1}
-    return render(request, 'cart.html')
+    if pk not in request.session['cart'].keys():
+        request.session['cart'][pk] = {'count': 1}
+    else:
+        request.session['cart'][pk]['count'] += 1
+    # https://docs.djangoproject.com/en/1.11/topics/http/sessions/#when-sessions-are-saved
+    request.session.modified = True
+    return redirect('cart')
