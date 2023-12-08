@@ -188,14 +188,16 @@ def category_delete_view(request, pk):
 
 def cart_view(request):
 
-    cart = request.session['cart']
     tickets = []
     total_price = 0
-    for key, value in cart.items():
-        event = Event.objects.get(id=key)
-        sum_price = value['count'] * event.price
-        tickets.append({'event_id': event.id, 'name': event.name, 'price': event.price, 'count': value['count'], 'sum': sum_price})
-        total_price += sum_price
+    if 'cart' in request.session.keys():
+        cart = request.session['cart']
+
+        for key, value in cart.items():
+            event = Event.objects.get(id=key)
+            sum_price = value['count'] * event.price
+            tickets.append({'event_id': event.id, 'name': event.name, 'price': event.price, 'count': value['count'], 'sum': sum_price})
+            total_price += sum_price
 
     context = {'session': request.session, 'tickets': tickets, 'total_price': total_price}
 
