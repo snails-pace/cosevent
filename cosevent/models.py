@@ -44,8 +44,8 @@ class Event(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     availability = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    artist_name = models.CharField(max_length=255)
-    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    artist = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
 
     def __str__(self):
         return self.name

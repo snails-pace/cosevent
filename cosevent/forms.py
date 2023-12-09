@@ -19,7 +19,7 @@ class UpdateEventForm(forms.ModelForm):
     # Display all fields except id with date as DateInput widget
     class Meta:
         model = Event
-        fields = ['name', 'date', 'venue', 'category', 'availability', 'artist_name', 'description', 'price', 'owner']
+        fields = ['name', 'date', 'venue', 'category', 'availability', 'artist', 'description', 'price']
 
         widgets = {
             'date': DateInput(),

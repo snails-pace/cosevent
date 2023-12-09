@@ -36,7 +36,7 @@ def my_event_list_view(request):
     except Profile.DoesNotExist:
         profile = None
     if profile:
-        user_events = Event.objects.filter(owner=profile)
+        user_events = Event.objects.filter(artist=profile)
     else:
         user_events = Event.objects.all()
 
@@ -52,7 +52,7 @@ def event_view(request, pk):
 
     if logged_in_user and not logged_in_user.is_anonymous:
         profile_id = Profile.objects.get(user=logged_in_user).id
-        if profile_id == event.owner_id:
+        if profile_id == event.artist_id:
             context['is_owner'] = True
 
     return render(request, 'event.html', context)
@@ -95,7 +95,7 @@ def event_delete_view(request, pk):
     event = get_object_or_404(Event, id=pk)
     profile_id = Profile.objects.get(user=request.user).id
     # if logged in user is not owner of the event, then raise 403
-    if profile_id != event.owner_id:
+    if profile_id != event.artist_id:
         raise PermissionDenied("You do not have permission to delete this event")
     if request.method == 'POST':
         event.delete()
@@ -123,7 +123,7 @@ def create_event_view(request):
         return redirect('my_events')
     else:
         profile_id = Profile.objects.get(user=request.user).id
-        event_form = UpdateEventForm(initial={'owner': profile_id})
+        event_form = UpdateEventForm(initial={'artist': profile_id})
 
     context = {'form': event_form}
     context['title'] = 'Create Event'
@@ -134,7 +134,7 @@ def update_event_view(request, pk):
     event = get_object_or_404(Event, id=pk)
     profile_id = Profile.objects.get(user=request.user).id
     # if logged in user is not owner of the event, then raise 403
-    if profile_id != event.owner_id:
+    if profile_id != event.artist_id:
         raise PermissionDenied("You do not have permission to edit this event")
     if request.method == 'POST':
         event_form = UpdateEventForm(request.POST, instance=event)
@@ -152,7 +152,7 @@ def update_event_view(request, pk):
         context['title'] = 'Update Event'
         return render(request, 'event_update.html', context)
 
-
+@login_required
 @require_http_methods(['GET'])
 def category_list_view(request):
 
