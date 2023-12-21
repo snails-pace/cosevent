@@ -113,7 +113,7 @@ def create_event_view(request):
         if event_form.is_valid():
             try:
                 event_form.save()
-                return redirect('event_list')
+                return redirect('my_events')
             except Exception as e:
                 print(f"Error occurred in {e}")
                 return HttpResponse(" An error occurred while creating the Event.")

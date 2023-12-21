@@ -16,6 +16,7 @@ class EventAdmin(admin.ModelAdmin):
     list_per_page = 10
 
 
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     # Registering Category to admin with name ordering and 20 entries per page

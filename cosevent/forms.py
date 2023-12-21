@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms import ModelChoiceField, DecimalField
+from django.forms import ModelChoiceField, DecimalField, widgets
 
 from cosevent.models import Event, Category, User
 
@@ -25,12 +25,28 @@ class UpdateEventForm(forms.ModelForm):
             'date': DateInput(),
         }
 
-        owner = CustomModelChoiceField(
+        artist = CustomModelChoiceField(
             queryset=User.objects.all(),
             widget=forms.Select(attrs={'class': 'form-control'}),
             to_field_name='username',
             label='Owner'
         )
+# Set artist field to readonly
+# https://stackoverflow.com/questions/324477/in-a-django-form-how-do-i-make-a-field-readonly-or-disabled-so-that-it-cannot
+#     def __init__(self, *args, **kwargs):
+#         super(UpdateEventForm, self).__init__(*args, **kwargs)
+#         instance = getattr(self, 'instance', None)
+#         if instance and instance.pk:
+#             self.fields['artist'].required = False
+#             self.fields['artist'].widget.attrs['disabled'] = 'disabled'
+#
+#     def clean_artist(self):
+#         instance = getattr(self, 'instance', None)
+#         if instance:
+#             return instance.artist
+#         else:
+#             return self.cleaned_data.get('artist', None)
+
 
     def clean_description(self):
         # Raises error if description text is longer than 400 chars
