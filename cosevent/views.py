@@ -205,7 +205,7 @@ def cart_view(request):
 
 
 def cart_update_view(request, pk, increment):
-    # increment states if increment (+1) or decrement (-1)
+    # increments/decrements the count in the cart item -> increment = increment ('inc') or decrement ('dec')
     pk = str(pk)
     # check if cart exists yet:
     if 'cart' in request.session.keys():
@@ -214,6 +214,9 @@ def cart_update_view(request, pk, increment):
             cart[pk]['count'] += 1
         if increment == 'dec':
             cart[pk]['count'] -= 1
+            # delete cart item if decreased to 0:
+            if cart[pk]['count'] <= 0:
+                del cart[pk]
 
     request.session.modified = True
     return redirect('cart')
