@@ -19,8 +19,11 @@ Source: https://getbootstrap.com/docs/5.0/utilities/flex/-->
 <div class="card">
     <div class="card-body d-flex bd-highlight flex-row">
         <div class="p-2 flex-grow-1 bd-highlight event-name">{{ ticket.name }}</div>
-        <div class="p-2 bd-highlight">Count: {{ ticket.count }}</div>
-        <div class="p-2 bd-highlight">Price: {{ ticket.price }}</div>
+        <div class="p-2 bd-highlight">Count: {{ ticket.count }}
+            <a href="{% url 'cart_update' ticket.event_id 'inc' %}" class="btn btn-success">+</a>
+            <a href="{% url 'cart_update' ticket.event_id 'dec' %}" class="btn btn-success" >-</a>
+        </div>
+        <div class="p-2 bd-highlight">Price: {{ ticket.price }} </div>
         <div class="p-2 bd-highlight">Sum:{{ ticket.sum }}</div>
     </div>
 </div>

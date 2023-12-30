@@ -53,15 +53,3 @@ class Event(models.Model):
     class Meta:
         ordering = ['date']
 
-
-class CartItem(models.Model):
-    # Category model with name as string representation
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    number = models.PositiveIntegerField()
-
-    def __str__(self):
-        return self.event.name
-
-    class Meta:
-        ordering = ['event']

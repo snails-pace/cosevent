@@ -204,6 +204,21 @@ def cart_view(request):
     return render(request, 'cart.html', context)
 
 
+def cart_update_view(request, pk, increment):
+    # increment states if increment (+1) or decrement (-1)
+    pk = str(pk)
+    # check if cart exists yet:
+    if 'cart' in request.session.keys():
+        cart = request.session['cart']
+        if increment == 'inc':
+            cart[pk]['count'] += 1
+        if increment == 'dec':
+            cart[pk]['count'] -= 1
+
+    request.session.modified = True
+    return redirect('cart')
+
+
 def add_to_cart_view(request, pk):
     pk = str(pk)
     if 'cart' not in request.session:
