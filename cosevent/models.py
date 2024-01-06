@@ -24,6 +24,7 @@ class Profile(models.Model):
     def __str__(self):
         return self.nickname
 
+
 class Category(models.Model):
     # Category model with name as string representation
     name = models.CharField(max_length=255)

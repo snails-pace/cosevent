@@ -56,6 +56,14 @@ class UpdateEventForm(forms.ModelForm):
             raise ValidationError("Your description text is to long! (max. 400 char)")
         return input_description
 
+    def clean_price(self):
+        # Raises error if description text is longer than 400 chars
+        input_price = self.cleaned_data['price']
+
+        if input_price < 0:
+            raise ValidationError("The price can't be negative")
+        return input_price
+
     def clean(self):
         # Raises error if date and venue are the same (the venue is booked at this date)
         # therefore searches in the database with filter to find matching entries
