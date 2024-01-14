@@ -112,6 +112,8 @@ def create_event_view(request):
         event_form = UpdateEventForm(request.POST)
         if event_form.is_valid():
             try:
+                # set artist field manually to current user
+                event_form.instance.artist = Profile.objects.get(user=request.user)
                 event_form.save()
                 messages.success(request, "Event created")
                 return redirect('my_events')
@@ -122,8 +124,7 @@ def create_event_view(request):
             print(event_form.cleaned_data)
             print(event_form.errors)
     else:
-        profile_id = Profile.objects.get(user=request.user).id
-        event_form = UpdateEventForm(initial={'artist': profile_id})
+        event_form = UpdateEventForm()
 
     context = {'form': event_form, 'title': 'Create Event'}
     return render(request, 'event_create.html', context)

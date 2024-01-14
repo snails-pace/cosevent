@@ -19,18 +19,13 @@ class UpdateEventForm(forms.ModelForm):
     # Display all fields except id with date as DateInput widget
     class Meta:
         model = Event
-        fields = ['name', 'date', 'venue', 'category', 'availability', 'artist', 'description', 'price']
+        fields = ['name', 'date', 'venue', 'category', 'availability', 'description', 'price']
 
         widgets = {
             'date': DateInput(),
         }
 
-        artist = CustomModelChoiceField(
-            queryset=User.objects.all(),
-            widget=forms.Select(attrs={'class': 'form-control'}),
-            to_field_name='username',
-            label='Owner'
-        )
+
 # Set artist field to readonly
 # https://stackoverflow.com/questions/324477/in-a-django-form-how-do-i-make-a-field-readonly-or-disabled-so-that-it-cannot
 #     def __init__(self, *args, **kwargs):
