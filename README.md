@@ -2,24 +2,40 @@
 
 ## Funktion der Anwendung
 
-* ist eine Event-Management Software
-* es können Veranstaltungen von Kuenstler\*innen erstellt/ihre eigens erstellten bearbeitet werden und diese für die Öffentlichkeit sichtbar gemacht. Und Tickets können für diese Veranstaltungen gebucht werden.
-* Besucher*innen können alle Veranstaltungen ohne Login einsehen.
-* Besucher*innen können Veranstaltungen buchen und dann im Warenkorb einsehen.
+Cosevent ist eine Event-Management Software.
+* Es können Veranstaltungen von Künstler\*innen erstellt/ihre eigens erstellten bearbeitet und gelöscht werden und diese für die Öffentlichkeit sichtbar gemacht werden. 
+* Tickets für die Veranstaltungen können gebucht werden.
+* Künstler\*innen können Kategorien anlegen/löschen, die mit den Veranstaltungen verknüpft sind.
+* Besucher*innen der Anwendung können alle Veranstaltungen auch ohne Login einsehen.
+* Besucher*innen der Anwendung können Veranstaltungen buchen und dann im Warenkorb einsehen.
 
 ## Anforderungen zur Installation der Anwendung
 
 * Programmiersprache: Python3
 * Framework: Django
 * Datenbank: MySQL
- 
-## Verknüpfung der Anwendung mit der Datenbank
 
+## Bereitstellung der Anwendung
+
+1.
+
+## Verknüpfung der Anwendung mit der Datenbank
 * 
+
+## Datenbankstruktur
+* Die App Cosevent beinhaltet die folgenden Tabellen:
+### cosevent_category
+
+### cosevent_event
+
+### cosevent_profile
+
+### User
+
+###
 
 ## Aufbau der Anwendung
 
-* Seitenanzahl
 ### Seitenübersicht der Anwendung - Ihre Aufgaben und Besonderheiten
 * Besonderheiten der Seiten (ist Login nötig, besonderes bei der Eingabe von Daten beachten, ...)
 * Alle Seiten enthalten ein Menü im oberen Bereich der Seite, mit welchem zu den folgenden Seiten navigiert werden kann:
