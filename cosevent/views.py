@@ -113,6 +113,7 @@ def create_event_view(request):
         if event_form.is_valid():
             try:
                 event_form.save()
+                messages.success(request, "Event created")
                 return redirect('my_events')
             except Exception as e:
                 print(f"Error occurred in {e}")
@@ -140,6 +141,7 @@ def update_event_view(request, pk):
         event_form = UpdateEventForm(request.POST, instance=event)
         if event_form.is_valid():
             event_form.save()
+            messages.success(request, "Event updated")
         else:
             pass
 
@@ -167,6 +169,7 @@ def create_category_view(request):
         category_form = UpdateCategoryForm(request.POST)
         if category_form.is_valid():
             category_form.save()
+            messages.success(request, "Category created")
             return redirect('category_list')
     else:
         category_form = UpdateCategoryForm()

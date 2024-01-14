@@ -69,7 +69,8 @@ class EventTestCase(TestCase):
 
         # Creation of a sample user
         self.user = User.objects.create_user(
-            username='test@example.net'
+            username='test@example.net',
+            password='testPassword12'
         )
 
         self.profile = Profile.objects.create(
@@ -153,3 +154,19 @@ class EventTestCase(TestCase):
                 price=-4.20,
                 artist=self.profile
             )
+
+
+class EventCreateViewTest(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='test@example.net',
+            password='testPassword'
+        )
+
+        self.profile = Profile.objects.create(
+            user=self.user,
+            nickname='Pikachu',
+            birthdate=datetime.now().date()
+        )
+
