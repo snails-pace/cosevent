@@ -121,13 +121,11 @@ def create_event_view(request):
         else:
             print(event_form.cleaned_data)
             print(event_form.errors)
-        return redirect('my_events')
     else:
         profile_id = Profile.objects.get(user=request.user).id
         event_form = UpdateEventForm(initial={'artist': profile_id})
 
-    context = {'form': event_form}
-    context['title'] = 'Create Event'
+    context = {'form': event_form, 'title': 'Create Event'}
     return render(request, 'event_create.html', context)
 
 @login_required
@@ -142,17 +140,14 @@ def update_event_view(request, pk):
         if event_form.is_valid():
             event_form.save()
             messages.success(request, "Event updated")
+            return redirect('event', pk)
         else:
-            pass
-
-        return redirect('my_events', pk)
+            messages.error(request, "Form is not valid")
     else:
-
         event_form = UpdateEventForm(instance=event)
 
-        context = {'form': event_form}
-        context['title'] = 'Update Event'
-        return render(request, 'event_update.html', context)
+    context = {'form': event_form, 'title': 'Update Event'}
+    return render(request, 'event_update.html', context)
 
 @login_required
 @require_http_methods(['GET'])
