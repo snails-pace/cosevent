@@ -14,13 +14,43 @@ Cosevent ist eine Event-Management Software.
 * Programmiersprache: Python3
 * Framework: Django
 * Datenbank: MySQL
+* IDE: PyCharm 
 
 ## Bereitstellung der Anwendung
 
-1.
+```shell
+git clone ...
+cd cosevent
+# create virtual environment of your choice and switch to it (
+pip install -r requirements.txt
+# create mysql database (see Datenbankverknüpfung)
+python3 manage.py makemigrations
+python3 manage.py migrate
+# for testing start (test your app in your browser at port 8000):
+python3 manage.py runserver
+```
 
-## Verknüpfung der Anwendung mit der Datenbank
-* 
+## Datenbankverknüpfung mit PyCharm
+1. Installiere MySQL
+2. In PyCharm mit MySQL verbinden: https://www.jetbrains.com/help/pycharm/mysql.html#connect-to-mysql-database
+3. Datenbank erstellen: In PyCharm in der Query Konsole mit Create DATABASE <name> und dann nach der unten genannten Struktur implementieren:
+4. Django und MySQL verbinden:
+```shell
+pip install mysqlclient
+# connect with root user
+mysql -u root -p
+```
+5. In der settings.py die Datenbankverbindung eintragen
+DATABASES = {
+    'default': {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "EventManager",
+        "HOST": "localhost",
+        "USER": "root",
+        "PASSWORD": "<yourPassword>"
+    }
+}
+
 
 ## Datenbankstruktur
 * Die App Cosevent beinhaltet die folgenden Tabellen:
@@ -69,7 +99,7 @@ Login benötigt
 
 UpdateEventForm eingebettet
 * Hier können mittels eines Formulars neue Events erstellt werden. 
-* Das 'Category' Feld ist mit den Kategorie-Instancen verknüpft, die in der Rubrik 'Categories' erstellt werden können.
+* Das 'Category' Feld ist mit den Kategorie-Instanzen verknüpft, die in der Rubrik 'Categories' erstellt werden können.
 * Bis auf das 'Description' Feld und das 'Availability' Feld, welches einen Default-Wert 0 hat, sind alle Angaben Pflichtfelder.
 * Die derzeit eingeloggte Person wird automatisch in das 'Artist' Feld der Instanz des Event Models eingefügt, jedoch in der Sichtbarkeit versteckt, damit nicht andere Künstler*innen als die eingeloggte Person eingetragen werden können.
 * Der Veranstaltungsort wird im Formular (UpdateEventForm) überprüft, ob dieser schon eine Veranstaltung an diesem Tag hat und falls dies der Fall ist, ein Fehler ausgegeben.
@@ -91,7 +121,7 @@ UpdateEventForm eingebettet
 Login benötigt
 * Es können nur eigens erstellte Events gelöscht werden.
 * Diese Seite ist über den 'Delete'-Button der Detail Ansicht der Events erreichbar.
-* Hier gibt es nocheinmal eine eigene Seite für die Abfrage, ob das Event wirklich gelöscht werden soll.
+* Hier gibt es noch einmal eine eigene Seite für die Abfrage, ob das Event wirklich gelöscht werden soll.
 * Der 'Confirm'-Button löscht das Event aus der Datenbank und leitet auf die 'My Events' Seite weiter mit einer Banner-Benachrichtigung, dass das Event gelöscht wurde.
 * Der 'Cancel Button' führt auf die Detail-Seite des Events zurück ohne weitere Aktionen.
 
