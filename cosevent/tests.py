@@ -1,6 +1,7 @@
 from datetime import datetime, date
 
-from django.test import TestCase
+from django.test import TestCase, Client
+from django.urls import reverse
 
 from cosevent.models import User, Profile, Category, Event
 
@@ -147,11 +148,12 @@ class EventTestCase(TestCase):
             )
 
 
-class EventCreateViewTest(TestCase):
+class UpdateEventViewTest(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(
             username='test@example.net',
+            email='test@example.net',
             password='testPassword'
         )
 
@@ -161,3 +163,71 @@ class EventCreateViewTest(TestCase):
             birthdate=datetime.now().date()
         )
 
+        self.category = Category.objects.create(
+            name='Fun'
+        )
+
+        self.event = Event.objects.create(
+            name='Blumen pflanzen',
+            date=datetime.now().date(),
+            description='bla',
+            venue='Woanders',
+            category=self.category,
+            availability=1,
+            price=4.20,
+            artist=self.profile
+        )
+
+        self.client = Client()
+
+    def test_get_update_unauthenticated(self):
+        """GET request to the view without being logged in"""
+        response = self.client.get(reverse('event_update', args=[self.event.pk]))
+
+        self.assertEqual(response.status_code, 302)
+        # Check redirect to login page
+        expected_redirect_url = reverse('login') + '?next=' + reverse('event_update', args=[self.event.pk])
+        self.assertRedirects(response, expected_redirect_url)
+
+    def test_post_update_unauthenticated(self):
+        """POST request to the view without being logged in"""
+        response = self.client.post(reverse('event_update', args=[self.event.pk]))
+
+        self.assertEqual(response.status_code, 302)
+        # Check redirect to login page
+        expected_redirect_url = reverse('login') + '?next=' + reverse('event_update', args=[self.event.pk])
+        self.assertRedirects(response, expected_redirect_url)
+
+    def test_get_update_authenticated(self):
+        """GET request to the view authenticated"""
+        result = self.client.force_login(self.user)
+
+        response = self.client.get(reverse('event_update', args=[self.event.pk]))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('title' in response.context)
+
+        self.assertContains(response, 'Blumen pflanzen')
+        self.assertContains(response, 'bla')
+        self.assertContains(response, 'Woanders')
+        self.assertContains(response, self.profile)
+
+    def test_post_update_authenticated(self):
+        """GET request to the view authenticated"""
+        self.client.force_login(self.user)
+
+        response = self.client.post(reverse('event_update', args=[self.event.pk]), {
+            'name': 'Bird watching',
+            'date': datetime.now().date(),
+            'description': 'bla',
+            'venue': 'Draussen',
+            'category': self.category.pk,
+            'availability': 1,
+            'price': 4.20,
+            'artist': self.profile.pk})
+
+        self.assertEqual(response.status_code, 302)
+        self.event.refresh_from_db()
+
+        self.assertEqual('Bird watching', self.event.name)
+        self.assertEqual('Draussen', self.event.venue)
