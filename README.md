@@ -9,9 +9,9 @@
 
 ## Anforderungen zur Installation der Anwendung
 
-* ist in Python3 geschrieben
+* Programmiersprache: Python3
 * Framework: Django
-* nutzt als Datenbank MySQL
+* Datenbank: MySQL
  
 ## Verknüpfung der Anwendung mit der Datenbank
 
@@ -20,8 +20,7 @@
 ## Aufbau der Anwendung
 
 * Seitenanzahl
-* Welche Seiten gibt es und was kann da gemacht werden
-### Seiten der Anwendung, ihre Aufgaben und Besonderheiten
+### Seitenübersicht der Anwendung - Ihre Aufgaben und Besonderheiten
 * Besonderheiten der Seiten (ist Login nötig, besonderes bei der Eingabe von Daten beachten, ...)
 * Alle Seiten enthalten ein Menü im oberen Bereich der Seite, mit welchem zu den folgenden Seiten navigiert werden kann:
   * Event-Liste/Homepage
@@ -98,17 +97,63 @@ UpdateCategoryForm eingebettet
 * Der 'Cancel'-Button führt ohne weitere Aktionen auf die Kategorieübersicht zurück.
 
 #### Cart
-* 
+* Hier werden alle Tickets angezeigt, die zum Warenkorb hinzugefügt wurden als Liste (Cards) mit:
+  * Name der Veranstaltung
+  * Anzahl der Karten
+  * Preis der Karten
+  * Summe der Karten für die jeweilige Veranstaltung
+* Mit '+' und '-' Buttons neben der Anzahl der Karten für die jeweilige Veranstaltung kann die Anzahl verändert werden. 
+* Unten wird die Gesamtsumme aller Karten zusammen angezeigt.
 
 #### Login/Logout
-
+* wenn ausgeloggt:
+  * Es ist im Menü das Navigations-Element 'Login' zu sehen.
+  * Es wird das Django-Formular für Login geöffnet. 
+  * Der Username ist hier die Email-Adresse.
+  * Mit Klick auf den 'Login Button', wird bei korrekten Daten eingeloggt und auf die Homepage verwiesen.
+* Wenn eingeloggt:
+  * Es ist im Menü das Navigations-Element 'Logout' zu sehen.
+  * Mit Klick auf 'Logout' wird zur Logout Nachricht weitergeleitet und einem Link zum wieder einloggen.
+  
 ### Formulare
 
-* Das Formular ist einheitlich gestaltet und wird für alle Formularfunktionen der Anwendung genutzt.
+* Die Formular HTML Datei ist einheitlich gestaltet und wird für alle Formularfunktionen der Anwendung genutzt und auf der jeweiligen Seite eingebettet.
     * Das Formular wird über den csrf Token geschützt.
 
-## Anlegen/Bearbeiten von User-Daten
-* User also in diesem Fall Künstler*innen können nur von Admin-Seite im Admin Interface angelegt werden.
-    * Das Admin Interface wird von Django generiert und ist unter: /admin zu erreichen.
-    * Der Username in dieser Anwendung ist die Email-Adresse.
-    * 
+
+## Admin Interface (Anlegen und Bearbeiten von User- und Profildaten und Gruppen)
+* Das Admin Interface wird von Django generiert und ist unter: /admin zu erreichen.
+* User- und Profildaten können nur auf der Admin Seite angelegt/bearbeitet werden.
+### User-Daten anlegen
+* User also in diesem Fall Künstler*innen können nur von der Admin-Seite im Admin Interface angelegt werden.
+1. Von der Übersichtsseite unter dem App Namen (Cosevent) auf das '+' neben 'Users' klicken
+2. Formular ausfüllen (Username ist hier die Email-Adresse)
+3. 'Save'-Button klicken
+* Die Person wurde in der Datenbank angelegt.
+
+### User-Daten bearbeiten/ Berechtigungen hinzufügen
+1. In der linken Menüleiste unter dem App Namen (Cosevent) auf 'Users' klicken
+2. Den jeweiligen Usernamen, der bearbeitet werden soll anklicken
+3. Daten bearbeiten (hier können die User zu Gruppen hinzugefügt werden)
+4. 'Save'-Button klicken
+* Die Personendaten wurden in der Datenbank aktualisiert.
+
+### Profil-Daten anlegen
+1. In der linken Menüleiste unter dem App Namen (Cosevent) auf das '+' neben 'Profiles' klicken
+2. Eine bestehende User-Person auswählen und Daten ausfüllen
+3. 'Save'-Button klicken
+* Das Profil wurde in der Datenbank angelegt.
+
+### Profil-Daten bearbeiten
+1. In der linken Menüleiste unter dem App Namen (Cosevent) auf 'Profiles' klicken 
+2. Daten bearbeiten
+3. 'Save'-Button klicken
+* Die Profil-Daten wurden in der Datenbank aktualisiert.
+
+### Gruppen anlegen
+* Hier können Gruppen mit verschiedenen Berechtigungen angelegt werden.
+1. In der linken Menüleiste unter 'Authentication and Authorization' auf das '+' neben 'Groups' klicken
+2. Namen für die Gruppe eintragen und Berechtigungen auswählen
+3. 'Save'-Button klicken
+* Die Gruppe mit den Berechtigungen wurde angelegt.
+
