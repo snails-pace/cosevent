@@ -14,7 +14,7 @@ Cosevent ist eine Event-Management Software.
 * Programmiersprache: Python3
 * Framework: Django
 * Datenbank: MySQL
-* IDE: PyCharm 
+* IDE: PyCharm (optional)
 
 ## Bereitstellung der Anwendung
 
@@ -40,7 +40,8 @@ pip install mysqlclient
 # connect with root user
 mysql -u root -p
 ```
-5. In der settings.py die Datenbankverbindung eintragen
+5. In der settings.py die Datenbankverbindung eintragen:
+```python
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.mysql",
@@ -50,19 +51,81 @@ DATABASES = {
         "PASSWORD": "<yourPassword>"
     }
 }
-
+```
 
 ## Datenbankstruktur
-* Die App Cosevent beinhaltet die folgenden Tabellen:
+* Die App Cosevent beinhaltet die folgenden Tabellen, die durch die Models nach MySQL migriert wurden:
+
 ### cosevent_category
+Mit den Spalten:
+* id (von Django erstellt)
+* name: varchar(255)
 
 ### cosevent_event
+Mit den Spalten:
+* id (von Django erstellt)
+* name: varchar(255)
+* date: date
+* description: longtext
+* venue: varchar(255)
+* availability: int (positiv)
+* price: decimal
+* artist_id: bigint, Foreign key from Profile
 
 ### cosevent_profile
+* id (von Django erstellt)
+* nickname: varchar(255)
+* birthdate: date
+* user_id: bigint, Foreign key from User
 
-### User
+### cosevent_user
+* id (von Django erstellt)
+* email: varchar(254)
+* password (von Django erstellt)
 
-###
+## Benutzung der Anwendung
+
+### Nach Events suchen
+1. Gehe zu 'Events' und stöbere durch die verschiedenen Veranstaltungen.
+2. Um zur Detail-Seite des Events zu gelangen, klicke auf das jeweilige Event.
+
+### Event erstellen
+Login benötigt: Gehe auf Login und gebe die Anmelde-Daten ein und klicke auf 'Login'. 
+1. Gehe zu 'My Events' und klicke auf den Button 'New' oben rechts. 
+2. Fülle die Formulardaten aus. (Unvollständige Angaben werden rot markiert mit Fehlermeldung angezeigt.)
+3. Speichere das Event mit dem 'Save'-Button.
+
+### Event löschen
+Login benötigt: Gehe auf Login und gebe die Anmelde-Daten ein und klicke auf 'Login'. 
+1. Gehe unter 'My Events' oder 'Events' zum jeweiligen Event und klicke darauf. 
+2. In der Detailseite des Events klicke auf den Button 'Delete'. 
+3. Bestätige das Löschen auf der nun auftauchenden Seite mit dem 'Delete'-Button.
+
+### Event editieren
+Login benötigt: Gehe auf Login und gebe die Anmelde-Daten ein und klicke auf 'Login'. 
+1. Gehe unter 'My Events' oder 'Events' zum jeweiligen Event und klicke darauf.
+2. In der Detailseite des Events klicke auf den Button 'Edit'.
+3. Fülle die Formulardaten aus. (Unvollständige Angaben werden rot markiert mit Fehlermeldung angezeigt.)
+4. Speichere die Änderungen mit dem 'Save'-Button.
+
+### Kategorie erstellen
+Login benötigt: Gehe auf Login und gebe die Anmelde-Daten ein und klicke auf 'Login'. 
+1. Gehe zu 'Categories' und klicke auf den Button 'New' oben rechts.
+2. Fülle die Formulardaten aus. (Unvollständige Angaben werden rot markiert mit Fehlermeldung angezeigt.)
+3. Speichere die Kategorie mit dem 'Save'-Button.
+
+### Kategorie löschen
+Login benötigt: Gehe auf Login und gebe die Anmelde-Daten ein und klicke auf 'Login'. 
+1. Gehe unter 'Categories' zur jeweiligen Kategorie und klicke auf den zugehörigen 'Delete' Button. 
+2. Bestätige das Löschen auf der nun auftauchenden Seite mit dem 'Delete'-Button.
+
+### Ticket für eine Veranstaltung kaufen
+1. Gehe unter 'Events' zum jeweiligen Event und klicke darauf, um zur Detail-Ansicht zu gelangen.
+2. Klicke auf den 'Add to cart' Button. Es gibt eine Weiterleitung zum Warenkorb.
+3. Im Warenkorb kann die Anzahl der Tickets angepasst werden. Die Summe erscheint neben jeder Veranstaltung und der Gesamtpreis ist unter der Zusammenfassung von den Tickets zu sehen.
+4. Um den Kauf abzuschließen klicke auf den 'Buy' Button.
+5. Gib auf der nächsten Seite die Formulardaten an und bestätige den Kauf mit dem 'Confirm' Button.
+6. Im unteren Teil des Warenkorbs erscheinen nun die gekauften Tickets.
 
 ## Aufbau der Anwendung
 
