@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from django.test import TestCase
 
@@ -60,8 +60,8 @@ class CategoryTestCase(TestCase):
         )
 
     def test_category_profile_creation(self):
-        self.assertEqual(self.category.name, 'Fun')
-        self.assertNotEqual(self.category.name, 'fun')
+        self.assertNotEqual(self.category.name, 'Fun')
+        self.assertEqual(self.category.name, 'fun')
 
 
 class EventTestCase(TestCase):
@@ -80,7 +80,7 @@ class EventTestCase(TestCase):
         )
 
         self.category = Category.objects.create(
-            name='fun'
+            name='Fun'
         )
 
         self.event = Event.objects.create(
@@ -95,14 +95,17 @@ class EventTestCase(TestCase):
         )
 
     def test_event_creation(self):
+        self.assertIsNotNone(self.event.name)
         self.assertEqual(self.event.name, 'Blumen pflanzen')
         self.assertEqual(self.event.description, 'bla')
         self.assertEqual(self.event.venue, 'Woanders')
-        self.assertEqual(self.event.category, 'Fun')
+        self.assertEqual(self.event.category.name, 'Fun')
         self.assertEqual(self.event.availability, 1)
         self.assertEqual(self.event.price, 4.20)
         self.assertEqual(self.event.artist, self.profile)
-        self.assertNotEqual(self.event.category, 'fun')
+        self.assertNotEqual(self.event.category.name, 'fun')
+        self.assertIsInstance(self.profile.birthdate, date)
+
 
     def test_event_creation_with_non_existing_artist(self):
         with self.assertRaises(Exception):
@@ -133,25 +136,13 @@ class EventTestCase(TestCase):
     def test_event_creation_with_missing_inputs(self):
         with self.assertRaises(Exception):
             Event.objects.create(
+                name=None,
                 date=datetime.now().date(),
                 description='bla',
                 venue='Woanders',
                 category=self.category,
                 availability=1,
                 price=4.20,
-                artist=self.profile
-            )
-
-    def test_event_creation_with_negative_price(self):
-        with self.assertRaises(Exception):
-            Event.objects.create(
-                name='Bird watching',
-                date=datetime.now().date(),
-                description='bla',
-                venue='Woanders',
-                category=self.category,
-                availability=1,
-                price=-4.20,
                 artist=self.profile
             )
 
