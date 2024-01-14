@@ -5,11 +5,14 @@ from django.db import models
 # Create your models here
 
 class User(AbstractUser):
-    # email and username have to be unique
-    # returns username as string representation
+    """
+    User model with username as string representation
+    Takes email instead of username for login
+    Fields email and username have to be unique
+    """
+
     email = models.EmailField(unique=True)
     REQUIRED_FIELDS = []
-    # takes email instead of username for login:
     USERNAME_FIELD = 'email'
 
     def __str__(self):
@@ -17,6 +20,11 @@ class User(AbstractUser):
 
 
 class Profile(models.Model):
+    """
+    Profile model with nickname as string representation
+    References the User model in the user field
+    """
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nickname = models.CharField(max_length=255)
     birthdate = models.DateField(null=True)
@@ -26,7 +34,11 @@ class Profile(models.Model):
 
 
 class Category(models.Model):
-    # Category model with name as string representation
+    """
+    Category model with name field as string representation
+    Ordering by name field
+    """
+
     name = models.CharField(max_length=255)
 
     def __str__(self):
@@ -37,7 +49,11 @@ class Category(models.Model):
 
 
 class Event(models.Model):
-    # Category Event with name as string representation
+    """
+    Event model with name as string representation
+    Ordering by date
+    """
+
     name = models.CharField(max_length=255)
     date = models.DateField()
     description = models.TextField(blank=True)

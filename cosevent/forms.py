@@ -9,14 +9,19 @@ class DateInput(forms.DateInput):
     # date input class for widgets
     input_type = 'date'
 
+
 class CustomModelChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, user):
         return user.username
 
 
 class UpdateEventForm(forms.ModelForm):
-    # Form to update Event
-    # Display all fields except id with date as DateInput widget
+    """
+    Form to update a specific event
+    Displays all fields of the EventModel except id and artist.
+    Includes the date field as DateInput widget.
+    Inherits from django.forms.ModelForm
+    """
     class Meta:
         model = Event
         fields = ['name', 'date', 'venue', 'category', 'availability', 'description', 'price']
@@ -25,26 +30,11 @@ class UpdateEventForm(forms.ModelForm):
             'date': DateInput(),
         }
 
-
-# Set artist field to readonly
-# https://stackoverflow.com/questions/324477/in-a-django-form-how-do-i-make-a-field-readonly-or-disabled-so-that-it-cannot
-#     def __init__(self, *args, **kwargs):
-#         super(UpdateEventForm, self).__init__(*args, **kwargs)
-#         instance = getattr(self, 'instance', None)
-#         if instance and instance.pk:
-#             self.fields['artist'].required = False
-#             self.fields['artist'].widget.attrs['disabled'] = 'disabled'
-#
-#     def clean_artist(self):
-#         instance = getattr(self, 'instance', None)
-#         if instance:
-#             return instance.artist
-#         else:
-#             return self.cleaned_data.get('artist', None)
-
-
     def clean_description(self):
-        # Raises error if description text is longer than 400 chars
+        """ Raises an error if the description text is longer than 400 chars
+        :param self: UpdateEventForm
+        :return: cleaned description
+        """
         input_description = self.cleaned_data['description']
 
         if len(input_description) > 400:
@@ -52,7 +42,11 @@ class UpdateEventForm(forms.ModelForm):
         return input_description
 
     def clean_price(self):
-        # Raises error if description text is longer than 400 chars
+        """
+        Raises an error if a negative price is entered
+        :param self: UpdateEventForm
+        :return: cleaned price
+        """
         input_price = self.cleaned_data['price']
 
         if input_price < 0:
@@ -60,8 +54,11 @@ class UpdateEventForm(forms.ModelForm):
         return input_price
 
     def clean(self):
-        # Raises error if date and venue are the same (the venue is booked at this date)
-        # therefore searches in the database with filter to find matching entries
+        """
+        Raises an error if date and venue are the same (the venue is booked at this date)
+        It searches in the database with the filter function to find matching entries.
+        :param self: UpdateEventForm
+        """
         try:
             input_date = self.cleaned_data['date']
             input_venue = self.cleaned_data['venue']
@@ -73,23 +70,22 @@ class UpdateEventForm(forms.ModelForm):
             pass
 
 
-        # owner = CustomModelChoiceField(
-        #     queryset=User.objects.all(),
-        #     widget=forms.Select(attrs={'class': 'form-control'}),
-        #     to_field_name='username',
-        #     label='Owner'
-        # )
-
 class UpdateCategoryForm(forms.ModelForm):
-    # Form to update Category
-    # Displays name field
+    """
+    Form to create a category
+    Inherits from django.forms.ModelForm
+    """
+
     class Meta:
         model = Category
         fields = ['name']
 
     def clean_name(self):
-        # Raises error if the category name exists in the database to avoid duplicates
-        # Capitalizes category name
+        """
+        Raises an error if the category already exists and capitalizes the category name
+        :return: cleaned and capitalized name
+        """
+
         input_name = self.cleaned_data['name']
 
         names = Category.objects.filter(name__iexact=input_name)

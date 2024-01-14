@@ -9,9 +9,10 @@ from cosevent.models import User, Profile, Category, Event
 # Create your tests here.
 
 class UserProfileTestCase(TestCase):
+    """Test class to test the User and Profile models"""
     def setUp(self):
+        """Initialize test user and profile"""
 
-        # Creation of a sample user
         self.user = User.objects.create_user(
             username='test@example.net'
         )
@@ -23,17 +24,21 @@ class UserProfileTestCase(TestCase):
         )
 
     def test_user_profile_creation(self):
+        """Test correct fields at user and profile creation"""
         self.assertEqual(self.user.username, 'test@example.net')
         self.assertEqual(self.profile.user, self.user)
         self.assertEqual(self.profile.nickname, 'Pikachu')
 
     def test_user_str_method(self):
+        """Test correct string representation of User model"""
         self.assertEqual(str(self.user), 'test@example.net')
 
     def test_profile_str_method(self):
+        """Test correct string representation of profile model"""
         self.assertEqual(str(self.profile), 'Pikachu')
 
     def test_profile_with_non_existing_user(self):
+        """Test for error with non existing user reference in Profile model"""
         with self.assertRaises(Exception):
             Profile.objects.create(
                 user=6,
@@ -43,9 +48,11 @@ class UserProfileTestCase(TestCase):
 
 
 class CategoryTestCase(TestCase):
-    def setUp(self):
+    """Test class to test the Category model"""
 
-        # Creation of a sample user
+    def setUp(self):
+        """Initialize test user, profile and category"""
+
         self.user = User.objects.create_user(
             username='test@example.net'
         )
@@ -61,14 +68,16 @@ class CategoryTestCase(TestCase):
         )
 
     def test_category_profile_creation(self):
+        """Test correct Profile instance creation"""
         self.assertNotEqual(self.category.name, 'Fun')
         self.assertEqual(self.category.name, 'fun')
 
 
 class EventTestCase(TestCase):
+    """Test class to test the Event model"""
     def setUp(self):
+        """Initialize test user, profile, category and event"""
 
-        # Creation of a sample user
         self.user = User.objects.create_user(
             username='test@example.net',
             password='testPassword12'
@@ -96,6 +105,7 @@ class EventTestCase(TestCase):
         )
 
     def test_event_creation(self):
+        """Test for correct fields at event instance creation"""
         self.assertIsNotNone(self.event.name)
         self.assertEqual(self.event.name, 'Blumen pflanzen')
         self.assertEqual(self.event.description, 'bla')
@@ -107,8 +117,8 @@ class EventTestCase(TestCase):
         self.assertNotEqual(self.event.category.name, 'fun')
         self.assertIsInstance(self.profile.birthdate, date)
 
-
     def test_event_creation_with_non_existing_artist(self):
+        """Test for error at event creation with a wrong artist reference"""
         with self.assertRaises(Exception):
             Event.objects.create(
                 name='Bird watching',
@@ -122,6 +132,7 @@ class EventTestCase(TestCase):
             )
 
     def test_event_creation_with_non_existing_category(self):
+        """Test for error at event creation with a wrong category reference"""
         with self.assertRaises(Exception):
             Event.objects.create(
                 name='Bird watching',
@@ -135,6 +146,7 @@ class EventTestCase(TestCase):
             )
 
     def test_event_creation_with_missing_inputs(self):
+        """Test for error at event creation with missing name input"""
         with self.assertRaises(Exception):
             Event.objects.create(
                 name=None,
@@ -149,8 +161,10 @@ class EventTestCase(TestCase):
 
 
 class UpdateEventViewTest(TestCase):
+    """Test class to test the update_event_view"""
 
     def setUp(self):
+        """Initialize test user, profile, category and event"""
         self.user = User.objects.create_user(
             username='test@example.net',
             email='test@example.net',
@@ -181,7 +195,7 @@ class UpdateEventViewTest(TestCase):
         self.client = Client()
 
     def test_get_update_unauthenticated(self):
-        """GET request to the view without being logged in"""
+        """Test GET request to the view without being logged in"""
         response = self.client.get(reverse('event_update', args=[self.event.pk]))
 
         self.assertEqual(response.status_code, 302)
@@ -190,7 +204,7 @@ class UpdateEventViewTest(TestCase):
         self.assertRedirects(response, expected_redirect_url)
 
     def test_post_update_unauthenticated(self):
-        """POST request to the view without being logged in"""
+        """Test POST request to the view without being logged in"""
         response = self.client.post(reverse('event_update', args=[self.event.pk]))
 
         self.assertEqual(response.status_code, 302)
@@ -199,7 +213,7 @@ class UpdateEventViewTest(TestCase):
         self.assertRedirects(response, expected_redirect_url)
 
     def test_get_update_authenticated(self):
-        """GET request to the view authenticated"""
+        """Test GET request to the view (authenticated)"""
         result = self.client.force_login(self.user)
 
         response = self.client.get(reverse('event_update', args=[self.event.pk]))
@@ -213,7 +227,7 @@ class UpdateEventViewTest(TestCase):
         self.assertContains(response, self.profile)
 
     def test_post_update_authenticated(self):
-        """GET request to the view authenticated"""
+        """Test POST request to the view (authenticated)"""
         self.client.force_login(self.user)
 
         response = self.client.post(reverse('event_update', args=[self.event.pk]), {

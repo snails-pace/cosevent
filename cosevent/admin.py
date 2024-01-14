@@ -9,7 +9,8 @@ from cosevent.models import Event, Category, User, Profile
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    # Registering Event to admin with name ordering and 20 entries per page
+    """Registering Event to admin with name ordering and 10 entries per page"""
+
     list_display = ['id', 'name', 'date', 'venue', 'category_id', 'availability', 'artist', 'description']
     list_editable = ['name', 'date', 'venue', 'availability', 'artist', 'description']
     ordering = ['name']
@@ -19,7 +20,8 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    # Registering Category to admin with name ordering and 20 entries per page
+    """Registering Category to admin with name ordering and 10 entries per page"""
+
     list_display = ['id', 'name']
     list_editable = ['name']
     ordering = ['name']
@@ -28,11 +30,15 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
+    """Registering User to admin with email ordering and 10 entries per page"""
+
     ordering = ['email']
     list_per_page = 10
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
+    """Registering Profile to admin with nickname ordering and 10 entries per page"""
+
     list_display = ['id', 'nickname', 'birthdate']
     list_editable = ['nickname', 'birthdate']
     ordering = ['nickname']

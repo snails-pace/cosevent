@@ -108,6 +108,11 @@ def event_delete_view(request, pk):
 
 @login_required
 def create_event_view(request):
+    """Create new events
+
+    GET: Shows a form to enter event data
+    POST: Validates the form and saves the new event if valid. Errors will be rendered if not valid
+    """
     if request.method == 'POST':
         event_form = UpdateEventForm(request.POST)
         if event_form.is_valid():
@@ -131,6 +136,7 @@ def create_event_view(request):
 
 @login_required
 def update_event_view(request, pk):
+    """Edit existing event fields like description, name, price"""
     event = get_object_or_404(Event, id=pk)
     profile_id = Profile.objects.get(user=request.user).id
     # if logged in user is not owner of the event, then raise 403
