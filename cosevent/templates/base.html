@@ -8,20 +8,27 @@
     {% load bootstrap5 %}{% bootstrap_css %}{% bootstrap_javascript %}
   </head>
   <body>
-    <div id="page_title"><h2>CosEvent</h2></div>
-    <div class="container sticky-top">
-      <ul class="navbar navbar-expand-xl navbar-dark bg-dark">
+    <div id="page_title" class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-8"></div>
+            <h2 id="title" class="col">CosEvent</h2>
+            <div class="col" id="logo-col"><img class="img-fluid float-end" src="../../static/img/logo.png" id="logo" alt="Logo (snail)" width="120rem"></div>
+        </div>
+    </div>
+
+    <div id="nav-container" class="container-fluid sticky-top">
+      <ul class="navbar navbar-dark bg-dark">
         <li class="nav-item">
           <a class="nav-link link-light" href="{% url 'event_list' %}">Events</a>
         </li>
         <li class="nav-item">
           <a class="nav-link link-light" href="{% url 'my_events' %}">My Events</a>
         </li>
+              <li>
+            <a class="nav-link link-light" href="{% url 'category_list' %}">Categories</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link link-light" href="{% url 'cart' %}">Cart</a>
-        </li>
-        <li>
-            <a class="nav-link link-light" href="{% url 'category_list' %}">Categories</a>
         </li>
         <li>
             {% if user.is_authenticated %}
