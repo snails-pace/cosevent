@@ -4,12 +4,9 @@
 }
 
 .navbar {
-    background-color: rgba(59, 114, 37);
-    /*background-image: linear-gradient(to bottom, rgba(59, 114, 37), rgb(193, 241, 178));*/
     margin-bottom: 3rem;
     padding-right: 3rem;
 }
-
 
 #page_title {
     padding-top: 5rem;
@@ -17,8 +14,6 @@
     background-image: url('img/fern2.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    background-color: #24231f;
-
     text-align: center;
     color: rgb(193, 241, 178);
 }
