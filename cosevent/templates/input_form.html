@@ -30,6 +30,6 @@
             <div id="invalid-{{ f_field.id_for_label }}" class="invalid-feedback">{{ f_field.errors }}</div>
         </div>
     {% endfor %}
-    <button class="btn btn-success" type="submit">Save</button>
-    <a class="btn btn-secondary" href="{% url redirect_view %}" type="button">Cancel</a>
+    <button class="btn btn-save" type="submit">Save</button>
+    <a class="btn btn-cancel" href="{% url redirect_view %}" type="button">Cancel</a>
 </form>

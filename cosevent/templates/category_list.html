@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row">
             <h2 class="col-auto me-auto">Categories</h2>
-            <div class="col-auto"><a class="btn btn-secondary" href="{% url 'category_create' %}">New</a></div>
+            <div class="col-auto"><a class="btn btn-new" href="{% url 'category_create' %}">New</a></div>
         </div>
     </div>
 
@@ -17,9 +17,9 @@
 <!--Creates a list of events with a bootstrap card style and a flexbox as card-card body with the infos in it.
 Source: https://getbootstrap.com/docs/5.0/utilities/flex/-->
 {% for category in category_list %}
-<div class="card bg-light">
+<div class="card">
     <div class="card-body d-flex bd-highlight flex-row">
-        <div class="p-2 flex-grow-1 bd-highlight">{{ category.name }}</div>
+        <div class="p-2 flex-grow-1 bd-highlight" id="category-name">{{ category.name }}</div>
         <div class="p-2 bd-highlight"><a href="{% url 'category_delete' category.id %}" class="btn btn-outline-danger">Delete</a></div>
     </div>
 </div>

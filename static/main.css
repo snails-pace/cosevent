@@ -79,6 +79,19 @@
 
 }
 
+.btn-save {
+    background-color: #AFC259 !important;
+    margin-right: 1rem;
+}
+
+.btn-cancel,
+.btn-new {
+    background-color: #BFBFBF !important;
+}
+
+#category-name {
+    font-weight: bold;
+}
 .event-name {
     font-weight: bold;
 }
