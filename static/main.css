@@ -3,43 +3,41 @@
     padding: 0;
 }
 
-.navbar {
-    margin-bottom: 3rem;
+.navbar-dark {
     padding-right: 3rem;
+    background-color: #111111;
+}
+
+.navbar-dark .navbar-brand {
+    color: #AFC259 !important;
+}
+
+.nav-link {
+    margin-right: 4rem;
+    color: #DFDFDF !important;
+}
+
+.navbar-brand {
+    margin-right: 4rem !important;
 }
 
 #page_title {
-    padding-top: 5rem;
-    padding-bottom: 0.5rem;
-    background-image: url('img/fern2.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    text-align: center;
-    color: rgb(193, 241, 178);
-}
-
-#banner {
-    background-color: rgba(59, 114, 37, 0.6);
-    padding: 0.3rem;
-}
-
-#title {
-    padding-right: 0;
-    text-align: end;
+    /*padding-top: 5rem;*/
+    /*padding-bottom: 0.5rem;*/
+    /*background-image: url('img/fern2.jpg');*/
+    /*background-size: cover;*/
+    /*background-repeat: no-repeat;*/
+    /*text-align: center;*/
+    /*color: rgb(193, 241, 178);*/
+    background-image: linear-gradient(to right, #AFC259, #111111);
+    padding-top: 1rem;
 }
 
 #logo-col {
     padding-right: 3rem;
     padding-left: 0;
 }
-.card {
-    background-color: rgb(193, 241, 178);
-}
-/*#content-container {*/
-/*    margin-bottom: 2rem;*/
-/*    margin-left: 2rem;*/
-/*    margin-right: 2rem;*/
-/*}*/
+
 
 .card {
     margin-bottom: 1rem;
@@ -49,3 +47,22 @@
     font-weight: bold;
 }
 
+#content-container {
+    margin-top: 3rem;
+}
+
+footer {
+    background-color: #111111;
+    color: #DFDFDF;
+    text-align: end;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    padding-right: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+        margin-bottom: 0;
+}
