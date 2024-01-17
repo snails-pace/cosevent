@@ -4,24 +4,68 @@
 {% block title %}Events{% endblock %}
 
 {% block section_title %}
-    <h2>{{ event.name }}</h2>
+    <h2>Event Details</h2>
 {% endblock %}
 
 {% block content %}
-    <div class="card bg-light">
-        <div class="card-body">
-            <p>Category: {{ event.category }}</p>
-            <p>Artist: {{ event.artist }}</p>
-            <p>{{ event.description }}</p>
-            <p>Date: {{ event.date }}</p>
-            <p>Location: {{ event.venue }}</p>
-            <p>No. of tickets available: {{ event.availability }}</p>
-            {% if is_owner %}
-                <a href="{% url 'event_update' event.id %}" class="btn btn-primary">Edit</a>
-                <a href="{% url 'event_delete' event.id %}" class="btn btn-danger">Delete</a>
-            {% endif %}
-                <a href="{% url 'add_to_cart' event.id %}" class="btn btn-secondary">Add to cart</a>
 
+    <div class="card border-light">
+        <div class="card-header fs-4">
+            {{ event.name }}
+            {% if is_owner %}
+                <a href="{% url 'event_update' event.id %}" class="btn edit-btn">Edit</a>
+                <a href="{% url 'event_delete' event.id %}" class="btn btn-outline-danger">Delete</a>
+            {% endif %}
+        </div>
+        <div class="card-body">
+            <div class="row align-items-start">
+                <div class="col-3">
+                    Category:
+                </div>
+                <div class="col-3">
+                    {{ event.category }}
+                </div>
+            </div>
+            <div class="row align-items-start">
+                <div class="col-3">
+                    Artist:
+                </div>
+                <div class="col-3">
+                    {{ event.artist }}
+                </div>
+            </div>
+            <div class="row align-items-start">
+                <div class="col-3">
+                    Date:
+                </div>
+                <div class="col-3">
+                    {{ event.date }}
+                </div>
+            </div>
+            <div class="row align-items-start">
+                <div class="col-3">
+                    Location:
+                </div>
+                <div class="col-3">
+                    {{ event.venue }}
+                </div>
+            </div>
+            <div class="row align-items-start">
+                <div class="col-3">
+                    No. of tickets available:
+                </div>
+                <div class="col-3">
+                    {{ event.availability }}
+                </div>
+            </div>
+            {% if event.description != "" %}
+            <div class="row align-items-start">
+                <div class="col-3">
+                    {{ event.description }}
+                </div>
+            </div>
+            {% endif %}
+                <a href="{% url 'add_to_cart' event.id %}" class="btn cart-btn">Add to cart</a>
         </div>
     </div>
 

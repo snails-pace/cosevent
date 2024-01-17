@@ -38,9 +38,36 @@
     padding-left: 0;
 }
 
+#section_title {
+    margin-bottom: 4rem !important;
+}
 
 .card {
     margin-bottom: 1rem;
+    background-color: rgba(223, 223, 223, 0.5) !important;
+    color: #111111;
+
+}
+
+.card-body a {
+    margin-top: 1rem;
+}
+
+.card-body .row {
+    margin-bottom: 1rem;
+}
+
+.card .cart-btn {
+    background-color: #AFC259;
+}
+
+.card .edit-btn {
+    border-color: #808080;
+    margin-left: 2rem;
+}
+
+.card .btn {
+    margin-right: 1rem;
 }
 
 .event-name {
@@ -48,7 +75,7 @@
 }
 
 #content-container {
-    margin-top: 3rem;
+    margin-top: 5rem;
 }
 
 footer {

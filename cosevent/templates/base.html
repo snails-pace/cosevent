@@ -18,7 +18,7 @@
     {# Navbar collapses to burger menu if size is small and spreads with bigger devices - Source: https://getbootstrap.com/docs/5.0/components/navbar/ #}
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top" >
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'event_list' %}">
+            <a class="navbar-brand fs-4" href="{% url 'event_list' %}">
                 <img src="../../static/img/logo1.png" alt="Logo (snail)" width="35"  class="d-inline-block align-text-center">
                 CosEvent
             </a>
@@ -26,7 +26,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
+                <div class="navbar-nav fs-5">
                     <a class="nav-link link-light" href="{% url 'event_list' %}">Events</a>
                     {% if user.is_authenticated %}
                     <a class="nav-link link-light" href="{% url 'my_events' %}">My Events</a>
