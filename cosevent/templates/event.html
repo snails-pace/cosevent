@@ -10,51 +10,54 @@
 {% block content %}
 
     <div class="card border-light">
-        <div class="card-header fs-4">
-            {{ event.name }}
+        <div class="card-header fs-4 d-flex justify-content-between align-items-center">
+            <div class="mr-auto">{{ event.name }}</div>
             {% if is_owner %}
-                <a href="{% url 'event_update' event.id %}" class="btn edit-btn">Edit</a>
-                <a href="{% url 'event_delete' event.id %}" class="btn btn-outline-danger">Delete</a>
+                <div>
+                    <a href="{% url 'event_update' event.id %}" class="btn edit-btn">Edit</a>
+                    <a href="{% url 'event_delete' event.id %}" class="btn btn-outline-danger">Delete</a>
+                </div>
+
             {% endif %}
         </div>
         <div class="card-body">
             <div class="row align-items-start">
-                <div class="col-3">
+                <div class="col-md-3 col-6">
                     Category:
                 </div>
-                <div class="col-3">
+                <div class="col-md-3 col-6">
                     {{ event.category }}
                 </div>
             </div>
             <div class="row align-items-start">
-                <div class="col-3">
+                <div class="col-md-3 col-6">
                     Artist:
                 </div>
-                <div class="col-3">
+                <div class="col-md-3 col-6">
                     {{ event.artist }}
                 </div>
             </div>
             <div class="row align-items-start">
-                <div class="col-3">
+                <div class="col-md-3 col-6">
                     Date:
                 </div>
-                <div class="col-3">
+                <div class="col-md-3 col-6">
                     {{ event.date }}
                 </div>
             </div>
             <div class="row align-items-start">
-                <div class="col-3">
+                <div class="col-md-3 col-6">
                     Location:
                 </div>
-                <div class="col-3">
+                <div class="col-md-3 col-6">
                     {{ event.venue }}
                 </div>
             </div>
             <div class="row align-items-start">
-                <div class="col-3">
+                <div class="col-md-3 col-6">
                     No. of tickets available:
                 </div>
-                <div class="col-3">
+                <div class="col-md-3 col-6">
                     {{ event.availability }}
                 </div>
             </div>

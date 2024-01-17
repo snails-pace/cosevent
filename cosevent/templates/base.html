@@ -5,6 +5,7 @@
   <head>
     <title>{% block title %}{% endblock %}</title>
     {% load bootstrap5 %}{% bootstrap_css %}{% bootstrap_javascript %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
 
   <body>
@@ -53,8 +54,9 @@
         <div id="section_title" class="mb-3">{% block section_title %}{% endblock %}</div>
         <div id="content">{% block content %}{% endblock %}</div>
     </div>
-  </body>
-    <footer>
+      <footer>
         <p>Designed with Bootstrap 5</p>
     </footer>
+  </body>
+
 </html>
