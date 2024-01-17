@@ -70,12 +70,25 @@
     margin-right: 1rem;
 }
 
+.col .cart-btn {
+    background-color: #AFC259;
+}
+
+.count-btn {
+    border-color: #AFC259 !important;
+
+}
+
 .event-name {
     font-weight: bold;
 }
 
 #content-container {
     margin-top: 5rem;
+}
+
+#total_price {
+    margin-top: 3rem;
 }
 
 footer {
