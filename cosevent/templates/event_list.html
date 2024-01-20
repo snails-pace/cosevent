@@ -21,7 +21,7 @@ Source: https://getbootstrap.com/docs/5.0/utilities/flex/-->
         <div class="p-2 flex-grow-1 bd-highlight event-name">{{ event.name }}</div>
         <div class="p-2 bd-highlight">{{ event.venue }}</div>
         <div class="p-2 bd-highlight">{{ event.date }}</div>
-        <a href="{% url 'event' event.id %}" class="stretched-link"></a>
+        <a href="{% url 'event' event.id %}" class="stretched-link" title="Event Details"></a>
     </div>
 </div>
 {% endfor %}

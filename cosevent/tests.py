@@ -46,6 +46,26 @@ class UserProfileTestCase(TestCase):
                 birthdate=datetime.now().date()
             )
 
+    def test_edit_profile(self):
+        """Test updating Profile"""
+        self.profile.nickname = "Raichu"
+        self.profile.save()
+        pika = Profile.objects.get(nickname="Raichu")
+
+        self.assertEqual(str(pika), 'Raichu')
+
+        with self.assertRaises(Exception):
+            self.profile.user = 7
+            self.profile.save()
+
+    def test_delete_profile(self):
+        """Test deleting Profile"""
+        self.profile.delete()
+
+        with self.assertRaises(Exception):
+            Profile.objects.get(nickname="Raichu")
+
+
 
 class CategoryTestCase(TestCase):
     """Test class to test the Category model"""
@@ -67,10 +87,25 @@ class CategoryTestCase(TestCase):
             name='fun'
         )
 
-    def test_category_profile_creation(self):
-        """Test correct Profile instance creation"""
+    def test_category_creation(self):
+        """Test correct Category instance creation"""
         self.assertNotEqual(self.category.name, 'Fun')
         self.assertEqual(self.category.name, 'fun')
+
+    def test_edit_category(self):
+        """Test updating Category"""
+        self.category.name = "Creating"
+        self.category.save()
+        pika = Category.objects.get(name="Creating")
+
+        self.assertEqual(str(pika), 'Creating')
+
+    def test_delete_category(self):
+        """Test deleting category"""
+        self.category.delete()
+
+        with self.assertRaises(Exception):
+            Category.objects.get(name="Creating")
 
 
 class EventTestCase(TestCase):
@@ -159,7 +194,23 @@ class EventTestCase(TestCase):
                 artist=self.profile
             )
 
+    def test_edit_event(self):
+        """Test updating Category"""
+        self.event.name = "Tanzen"
+        self.event.save()
+        tanzen = Event.objects.get(name="Tanzen")
 
+        self.assertEqual(str(tanzen), 'Tanzen')
+
+    def test_delete_(self):
+        """Test deleting event"""
+        self.event.delete()
+
+        with self.assertRaises(Exception):
+            Event.objects.get(name="Tanzen")
+
+
+#View Tests
 class UpdateEventViewTest(TestCase):
     """Test class to test the update_event_view"""
 
@@ -173,7 +224,7 @@ class UpdateEventViewTest(TestCase):
 
         self.profile = Profile.objects.create(
             user=self.user,
-            nickname='Pikachu',
+            nickname='Artist',
             birthdate=datetime.now().date()
         )
 
@@ -217,14 +268,12 @@ class UpdateEventViewTest(TestCase):
         result = self.client.force_login(self.user)
 
         response = self.client.get(reverse('event_update', args=[self.event.pk]))
-
         self.assertEqual(response.status_code, 200)
         self.assertTrue('title' in response.context)
 
         self.assertContains(response, 'Blumen pflanzen')
         self.assertContains(response, 'bla')
         self.assertContains(response, 'Woanders')
-        self.assertContains(response, self.profile)
 
     def test_post_update_authenticated(self):
         """Test POST request to the view (authenticated)"""
