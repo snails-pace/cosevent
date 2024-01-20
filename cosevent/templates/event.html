@@ -11,7 +11,7 @@
 
     <div class="card border-light">
         <div class="card-header fs-4 d-flex justify-content-between align-items-center">
-            <div class="mr-auto">{{ event.name }}</div>
+            <h2 id="event-header" class="mr-auto">{{ event.name }}</h2>
             {% if is_owner %}
                 <div>
                     <a href="{% url 'event_update' event.id %}" class="btn edit-btn">Edit</a>
