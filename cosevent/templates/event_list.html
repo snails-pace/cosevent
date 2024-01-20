@@ -6,7 +6,7 @@
 {% block section_title %}
     <div class="container">
         <div class="row">
-            <h2 class="col-auto me-auto">{% if my_view %}My {% endif %}Events</h2>
+            <h1 class="col-auto me-auto">{% if my_view %}My {% endif %}Events</h1>
             {% if my_view %}<div class="col-auto"><a class="btn btn-new" href="{% url 'event_create' %}">New</a></div>{% endif %}
         </div>
     </div>
