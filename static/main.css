@@ -111,6 +111,10 @@ body {
     margin-top: 3rem;
 }
 
+#price {
+    font-size: large;
+}
+
 footer {
     background-color: #111111;
     color: #DFDFDF;
