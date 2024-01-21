@@ -167,7 +167,11 @@ def cart_view(request):
         cart = request.session['cart']
 
         for key, value in cart.items():
-            event = Event.objects.get(id=key)
+            try:
+                event = Event.objects.get(id=key)
+            except Event.DoesNotExist:
+                continue
+
             sum_price = value['count'] * event.price
             tickets.append({'event_id': event.id, 'name': event.name, 'price': event.price, 'count': value['count'], 'sum': sum_price})
             total_price += sum_price
