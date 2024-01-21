@@ -208,12 +208,3 @@ def add_to_cart_view(request, pk):
     request.session.modified = True
     return redirect('cart')
 
-
-def video_view(request, pk):
-    pk = str(pk)
-    event = Event.objects.get(pk)
-    this_video = Video.objects.get(event.video)
-
-    return render(request, 'video.html', {'video': this_video})
-    # latest_video = Video.objects.latest('id')
-    # return render(request, 'video.html', {'video': latest_video})
