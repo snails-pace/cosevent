@@ -69,6 +69,9 @@
             </div>
             {% endif %}
                 <a href="{% url 'add_to_cart' event.id %}" class="btn cart-btn">Add to cart</a>
+            {% if event.video %}
+                {% include 'video.html' with video=event.video %}
+            {% endif %}
         </div>
     </div>
 

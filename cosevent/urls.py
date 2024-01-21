@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import video_view
 
 urlpatterns = [
     path("", views.event_list_view, name="event_list"),
@@ -13,5 +14,6 @@ urlpatterns = [
     path("category/<int:pk>/delete", views.category_delete_view, name="category_delete"),
     path("cart/", views.cart_view, name='cart'),
     path("event/<int:pk>/add_to_cart", views.add_to_cart_view, name='add_to_cart'),
-    path("cart/update/<int:pk>/<str:increment>", views.cart_update_view, name="cart_update")
+    path("cart/update/<int:pk>/<str:increment>", views.cart_update_view, name="cart_update"),
+    path("event/<int:pk>/video", video_view, name='video_view')
     ]

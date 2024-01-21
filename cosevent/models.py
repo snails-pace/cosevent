@@ -48,6 +48,15 @@ class Category(models.Model):
         ordering = ['name']
 
 
+class Video(models.Model):
+    """ Video model with title as string representation """
+    title = models.CharField(max_length=255)
+    video_url = models.URLField()
+
+    def __str__(self):
+        return self.title
+
+
 class Event(models.Model):
     """
     Event model with name as string representation
@@ -62,11 +71,13 @@ class Event(models.Model):
     availability = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     artist = models.ForeignKey(Profile, on_delete=models.CASCADE)
-
+    video = models.OneToOneField(Video, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
     class Meta:
         ordering = ['date']
+
+
 

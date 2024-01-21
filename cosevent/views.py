@@ -10,7 +10,7 @@ from django.views.decorators.http import require_http_methods
 from django.views.generic import TemplateView
 
 from cosevent.forms import UpdateEventForm, UpdateCategoryForm
-from cosevent.models import Event, Category, Profile
+from cosevent.models import Event, Category, Profile, Video
 
 
 # Create your views here.
@@ -56,38 +56,6 @@ def event_view(request, pk):
             context['is_owner'] = True
 
     return render(request, 'event.html', context)
-
-
-# class UpdateEventView(SuccessMessageMixin, generic.UpdateView):
-#     model = Event
-#     form_class = UpdateEventForm
-#     template_name = 'event_update.html'
-#     success_message = 'Your event %(name)s was saved'
-#
-#     def get_success_url(self):
-#         return reverse_lazy('event', args=[self.object.pk])
-#
-#     def form_valid(self, form):
-#         submitted_date = form.cleaned_data
-#
-#         return super().form_valid(form)
-
-
-
-# class CreateEventView(SuccessMessageMixin, generic.CreateView):
-#     model = Event
-#     form_class = UpdateEventForm
-#     template_name = 'event_create.html'
-#     success_message = 'Your event %(name)s was saved'
-#
-#     def get_success_url(self):
-#         return reverse_lazy('event', args=[self.object.pk])
-#
-#     def form_valid(self, form):
-#         submitted_date = form.cleaned_data
-#
-#         return super().form_valid(form)
-
 
 
 @login_required
@@ -239,3 +207,13 @@ def add_to_cart_view(request, pk):
     # https://docs.djangoproject.com/en/1.11/topics/http/sessions/#when-sessions-are-saved
     request.session.modified = True
     return redirect('cart')
+
+
+def video_view(request, pk):
+    pk = str(pk)
+    event = Event.objects.get(pk)
+    this_video = Video.objects.get(event.video)
+
+    return render(request, 'video.html', {'video': this_video})
+    # latest_video = Video.objects.latest('id')
+    # return render(request, 'video.html', {'video': latest_video})

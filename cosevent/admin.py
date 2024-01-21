@@ -11,8 +11,8 @@ from cosevent.models import Event, Category, User, Profile
 class EventAdmin(admin.ModelAdmin):
     """Registering Event to admin with name ordering and 10 entries per page"""
 
-    list_display = ['id', 'name', 'date', 'venue', 'category_id', 'availability', 'artist', 'description']
-    list_editable = ['name', 'date', 'venue', 'availability', 'artist', 'description']
+    list_display = ['id', 'name', 'date', 'venue', 'category_id', 'availability', 'artist', 'description', 'video']
+    list_editable = ['name', 'date', 'venue', 'availability', 'artist', 'description', 'video']
     ordering = ['name']
     list_per_page = 10
 
@@ -35,6 +35,7 @@ class UserAdmin(UserAdmin):
     ordering = ['email']
     list_per_page = 10
 
+
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     """Registering Profile to admin with nickname ordering and 10 entries per page"""
@@ -42,4 +43,13 @@ class ProfileAdmin(admin.ModelAdmin):
     list_display = ['id', 'nickname', 'birthdate']
     list_editable = ['nickname', 'birthdate']
     ordering = ['nickname']
+    list_per_page = 10
+
+
+@admin.register(models.Video)
+class VideoAdmin(admin.ModelAdmin):
+    """Registering Video to admin with id ordering and 10 entries per page"""
+    list_display = ['id', 'title', 'video_url']
+    list_editable = ['title', 'video_url']
+    ordering = ['id']
     list_per_page = 10

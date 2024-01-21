@@ -93,7 +93,9 @@ Mit den Spalten:
 Login benötigt: Gehe auf Login und gebe die Anmelde-Daten ein und klicke auf 'Login'. 
 1. Gehe zu 'My Events' und klicke auf den Button 'New' oben rechts. 
 2. Fülle die Formulardaten aus. (Unvollständige Angaben werden rot markiert mit Fehlermeldung angezeigt.)
+   * Falls ein Video zu der Veranstaltung angezeigt werden soll, muss ein Link zu dem Video an die Administrator:innen per Email gesendet werden.
 3. Speichere das Event mit dem 'Save'-Button.
+   
 
 ### Event löschen
 Login benötigt: Gehe auf Login und gebe die Anmelde-Daten ein und klicke auf 'Login'. 
@@ -266,3 +268,11 @@ UpdateCategoryForm eingebettet
 3. 'Save'-Button klicken
 * Die Gruppe mit den Berechtigungen wurde angelegt.
 
+### Video anlegen und einem Event zuweisen
+* Videos können nur von Administrator:innen in der Administrator:innen-Ansicht hinzugefügt werden.
+1. In der linken Menüleiste auf das '+' neben 'Videos' klicken
+2. Formular ausfüllen
+3. 'Save'-Button klicken
+4. In der linken Menüleiste auf 'Events' klicken
+5. Das gewünschte Event ausfindig machen und in der Spalte 'Video' das Video aus der Auswahl auswählen
+6. 'Save'-Button klicken
