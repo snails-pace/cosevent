@@ -17,7 +17,6 @@
                     {% for widget in f_field.subwidgets %}
                         {{ widget }}
                     {% endfor %}
-                {# {% for value, name in f_field.field.choices %}<option value="{{ value }}">{{ name }}</option>{% endfor %} #}
                 </select>
             {% else %}
             <input id="{{ f_field.id_for_label }}"

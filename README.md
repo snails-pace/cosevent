@@ -40,7 +40,8 @@ pip install mysqlclient
 # connect with root user
 mysql -u root -p
 ```
-5. In der settings.py die Datenbankverbindung eintragen:
+5. In EventManager eine settings_local.py Datei erstellen, diese wird automatisch von settings.py importiert.
+6. In der settings_local.py die Datenbankverbindung eintragen:
 ```python
 DATABASES = {
     'default': {
