@@ -1,5 +1,4 @@
 /db.sqlite3
 /.idea
 __pycache__
-/static/img
 /EventManager/settings_local.py
