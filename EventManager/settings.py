@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = 'cosevent.User'
 
 # Overwrite django standard login path to profile, now to mainpage
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'my_events'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
