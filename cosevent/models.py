@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.translation import gettext as _
 
 
 # Create your models here
@@ -68,8 +69,8 @@ class Event(models.Model):
     description = models.TextField(blank=True)
     venue = models.CharField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
-    availability = models.PositiveIntegerField()
-    price = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    availability = models.PositiveIntegerField(_("No. of tickets available"))
+    price = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     artist = models.ForeignKey(Profile, on_delete=models.CASCADE)
     video = models.OneToOneField(Video, on_delete=models.SET_NULL, null=True, blank=True)
 
@@ -80,4 +81,30 @@ class Event(models.Model):
         ordering = ['date']
 
 
+class Order(models.Model):
+    """
+    Order Model with automatic add date of instance creation
+    """
+
+    customer_name = models.CharField(max_length=255)
+    customer_email = models.EmailField()
+    total_price = models.DecimalField(max_digits=6, decimal_places=2)
+    date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.id
+
+    class Meta:
+        ordering = ['id']
+
+
+class EventOrder(models.Model):
+    """
+    EventOrder Model with reference to the Order model to which it belongs
+    """
+
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    ticket_count = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
 
