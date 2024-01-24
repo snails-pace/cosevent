@@ -13,7 +13,7 @@
                 class="form-select {% if form.is_bound %}{% if not f_field.errors %}is-valid{% else %}is-invalid{% endif %}{% endif %}"
                 aria-describedby="invalid-{{ f_field.id_for_label }}">
                 {# https://stackoverflow.com/questions/36724255/render-choicefield-options-in-django-template #}
-                {# iterate over subwidgets to get the opions for the select field #}
+                {# iterate over subwidgets to get the options for the select field #}
                     {% for widget in f_field.subwidgets %}
                         {{ widget }}
                     {% endfor %}

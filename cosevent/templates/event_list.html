@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row">
             <h1 class="col-auto me-auto">{% if my_view %}My {% endif %}Events</h1>
-            {% if my_view %}<div class="col-auto"><a class="btn btn-new" href="{% url 'event_create' %}">New</a></div>{% endif %}
+            {% if my_view %}<div class="col-auto"><a class="btn btn-new" href="{% url 'event_create' %}">New Event</a></div>{% endif %}
         </div>
     </div>
 {% endblock %}
