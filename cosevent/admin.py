@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from cosevent import models
-from cosevent.models import Event, Category, User, Profile
+from cosevent.models import Event, Category, User, Profile, Order, EventOrder
 
 
 # Register your models here.
@@ -54,3 +54,18 @@ class VideoAdmin(admin.ModelAdmin):
     ordering = ['id']
     list_per_page = 10
 
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    """Registering Order to admin with date ordering and 10 entries per page"""
+    list_display = ['id', 'customer_name', 'customer_email', 'total_price', 'date']
+    ordering = ['date']
+    list_per_page = 10
+
+
+@admin.register(EventOrder)
+class EventOrderAdmin(admin.ModelAdmin):
+    """Registering EventOrder to admin with order_id ordering and 10 entries per page"""
+    list_display = ['id', 'event', 'ticket_count', 'price', 'order_id']
+    ordering = ['order_id']
+    list_per_page = 10
