@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import ModelChoiceField, DecimalField, widgets
 
-from cosevent.models import Event, Category, User
+from cosevent.models import Event, Category, User, Order
 
 
 class DateInput(forms.DateInput):
@@ -93,3 +93,18 @@ class UpdateCategoryForm(forms.ModelForm):
             raise ValidationError("Category already exists!")
 
         return input_name.capitalize()
+
+
+class OrderForm(forms.ModelForm):
+    """
+    Form to insert your data to create a Order Model and EventOrder Model
+    Displays all fields of the Order Model except id
+    Inherits from django.forms.ModelForm
+    """
+    class Meta:
+        model = Order
+        fields = ['customer_name', 'customer_email']
+
+    def clean(self):
+        pass
+

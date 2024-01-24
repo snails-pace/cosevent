@@ -70,7 +70,7 @@ class Event(models.Model):
     venue = models.CharField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     availability = models.PositiveIntegerField(_("No. of tickets available"))
-    price = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     artist = models.ForeignKey(Profile, on_delete=models.CASCADE)
     video = models.OneToOneField(Video, on_delete=models.SET_NULL, null=True, blank=True)
 

@@ -53,3 +53,4 @@ class VideoAdmin(admin.ModelAdmin):
     list_editable = ['title', 'video_url']
     ordering = ['id']
     list_per_page = 10
+

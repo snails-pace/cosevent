@@ -1,3 +1,5 @@
+import decimal
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
@@ -9,8 +11,8 @@ from django.views import generic
 from django.views.decorators.http import require_http_methods
 from django.views.generic import TemplateView
 
-from cosevent.forms import UpdateEventForm, UpdateCategoryForm
-from cosevent.models import Event, Category, Profile, Video
+from cosevent.forms import UpdateEventForm, UpdateCategoryForm, OrderForm
+from cosevent.models import Event, Category, Profile, Video, EventOrder
 
 
 # Create your views here.
@@ -212,3 +214,62 @@ def add_to_cart_view(request, pk):
     request.session.modified = True
     return redirect('cart')
 
+def buy_view(request):
+    """Buy tickets
+
+    POST: Validates the form and saves the new order if valid. Errors will be rendered if not valid
+    """
+
+    # Show tickets as in cart_view therefore add also list of tickets, where ticket is dict entry with count value from session
+    tickets = []
+    total_price = decimal.Decimal(0)
+    if 'cart' in request.session.keys():
+        cart = request.session['cart']
+
+        for key, value in cart.items():
+            try:
+                event = Event.objects.get(id=key)
+            except Event.DoesNotExist:
+                continue
+
+            sum_price = value['count'] * event.price
+            tickets.append({'event': event, 'name': event.name, 'price': event.price, 'count': value['count'],
+                            'sum': sum_price})
+            total_price += sum_price
+
+    # if POST set total price and save Order model
+    if request.method == 'POST':
+        order_form = OrderForm(request.POST)
+        if order_form.is_valid():
+            try:
+                # set artist field manually to current user
+                order_form.instance.total_price = total_price
+                order = order_form.save()
+                #print(order)
+                #messages.success(request, "Event created")
+
+                # Create an EventOrder model for each Event - Order relationship
+                for ticket in tickets:
+                    print(ticket)
+                    EventOrder.objects.create(event=ticket['event'], ticket_count=ticket['count'], price=ticket['sum'], order=order)
+                #
+                del request.session['cart']
+                request.session['order_nr'] = order.id
+                return redirect('purchased')
+            except Exception as e:
+                print(f"Error occurred in {e}")
+                return HttpResponse(" An error occurred while submitting the order.")
+        else:
+            print(order_form.cleaned_data)
+            print(order_form.errors)
+    else:
+        order_form = OrderForm()
+
+    context = {'form': order_form, 'title': 'Buy Tickets', 'session': request.session, 'tickets': tickets, 'total_price': total_price}
+    return render(request, 'buy.html', context)
+
+
+def purchased_view(request):
+    order = request.session['order_nr']
+    context = {'order': order}
+    return render(request, 'purchased.html', context)

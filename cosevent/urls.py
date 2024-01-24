@@ -15,4 +15,6 @@ urlpatterns = [
     path("cart/", views.cart_view, name='cart'),
     path("event/<int:pk>/add_to_cart", views.add_to_cart_view, name='add_to_cart'),
     path("cart/update/<int:pk>/<str:increment>", views.cart_update_view, name="cart_update"),
+    path("buy/", views.buy_view, name='buy'),
+    path("purchased/", views.purchased_view, name='purchased')
     ]

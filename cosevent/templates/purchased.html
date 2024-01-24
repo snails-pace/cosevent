@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}Purchased{% endblock %}
+
+{% block section_title %}
+    <h1>Purchase Confirmation</h1>
+{% endblock %}
+
+{% block content %}
+    <p>Congratulations! You ordered tickets on CosEvent. You will receive a confirmation email with the banking details.
+    Please transfer the amount to us with your order number in the reference field. You will then receive a link with the tickets. </p>
+
+    <p>Your Order Number: #{{ order }}</p>
+{% endblock %}
