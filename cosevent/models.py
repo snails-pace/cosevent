@@ -1,4 +1,6 @@
+import django.core.validators
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext as _
 
@@ -57,6 +59,8 @@ class Video(models.Model):
     def __str__(self):
         return self.title
 
+def validate_price(self):
+    raise ValidationError("bla")
 
 class Event(models.Model):
     """
@@ -70,15 +74,18 @@ class Event(models.Model):
     venue = models.CharField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     availability = models.PositiveIntegerField(_("No. of tickets available"))
-    price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    price = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     artist = models.ForeignKey(Profile, on_delete=models.CASCADE)
     video = models.OneToOneField(Video, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
+
+
     class Meta:
         ordering = ['date']
+
 
 
 class Order(models.Model):

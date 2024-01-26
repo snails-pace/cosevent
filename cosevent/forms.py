@@ -28,6 +28,7 @@ class UpdateEventForm(forms.ModelForm):
 
         widgets = {
             'date': DateInput(),
+            'price': forms.widgets.TextInput()
         }
 
     def clean_description(self):
