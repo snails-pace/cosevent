@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -20,12 +21,18 @@ class EventListView(generic.ListView):
     model = Event
     context_object_name = 'event_list'
     template_name = 'event_list.html'
+    paginate_by = 10
 
 
 def event_list_view(request):
 
     events = Event.objects.all()
-    context = {'event_list': events, 'my_view': False}
+
+    paginator = Paginator(events, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {'event_list': events, 'my_view': False, 'page_obj': page_obj}
     return render(request, 'event_list.html', context)
 
 
