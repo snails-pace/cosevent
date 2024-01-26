@@ -32,7 +32,7 @@ def event_list_view(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    context = {'event_list': events, 'my_view': False, 'page_obj': page_obj}
+    context = {'event_list': page_obj, 'my_view': False}
     return render(request, 'event_list.html', context)
 
 
