@@ -1,3 +1,4 @@
+import datetime
 import decimal
 
 from django.contrib import messages
@@ -26,7 +27,8 @@ class EventListView(generic.ListView):
 
 def event_list_view(request):
 
-    events = Event.objects.all()
+    # show only future events
+    events = Event.objects.filter(date__gte=datetime.date.today())
 
     paginator = Paginator(events, 10)
     page_number = request.GET.get('page')
