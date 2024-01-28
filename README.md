@@ -84,6 +84,20 @@ Mit den Spalten:
 * email: varchar(254)
 * password (von Django erstellt)
 
+### cosevent_order
+* id (von Django erstellt)
+* customer_name: varchar(255)
+* customer_email: email
+* total_price: decimal
+* date: date
+
+### cosevent_eventorder
+* id (von Django erstellt)
+* event: bigint, Foreign key from Event
+* ticket_count: positive integer
+* price: decimal
+* order: bigint, Foreign key from Order
+
 ## Benutzung der Anwendung
 
 ### Nach Events suchen
@@ -128,7 +142,10 @@ Login benötigt: Gehe auf Login und gebe die Anmelde-Daten ein und klicke auf 'L
 3. Im Warenkorb kann die Anzahl der Tickets angepasst werden. Die Summe erscheint neben jeder Veranstaltung und der Gesamtpreis ist unter der Zusammenfassung von den Tickets zu sehen.
 4. Um den Kauf abzuschließen klicke auf den 'Buy' Button.
 5. Gib auf der nächsten Seite die Formulardaten an und bestätige den Kauf mit dem 'Confirm' Button.
-6. Im unteren Teil des Warenkorbs erscheinen nun die gekauften Tickets.
+6. Die Availability vom Event wird dementsprechend runtergezählt und ein Order und EventOrder Model angelegt.
+6. Eine Kaufbestätigungs-Seite mit der Bestell-Nummer erscheint.
+
+
 
 ## Aufbau der Anwendung
 
@@ -139,6 +156,7 @@ Login benötigt: Gehe auf Login und gebe die Anmelde-Daten ein und klicke auf 'L
   * Event-Liste der eigens erstellten Events
   * Liste der Kategorien
   * Warenkorb
+  * Kaufen mit Bestägigung
   * Login/Logout
 #### Homepage (Events)
 ohne Login erreichbar
@@ -206,7 +224,7 @@ UpdateCategoryForm eingebettet
 * Es kann der Name der Kategorie eingegeben werden
   * Dieser wird überprüft und Capitalized.
 * Der 'Save'-Button speichert die Kategorie in der Datenbank und führt auf die Kategorie Übersicht zurück mit einer Erfolgsnachricht.
-* Der 'Cancel'-Button führt ohne weitere Aktionen auf die Kategorieübersicht zurück.
+* Der 'Cancel'-Button führt ohne weitere Aktionen auf die Kategorie-Übersicht zurück.
 
 #### Cart
 * Hier werden alle Tickets angezeigt, die zum Warenkorb hinzugefügt wurden als Liste (Cards) mit:
@@ -217,6 +235,17 @@ UpdateCategoryForm eingebettet
 * Mit '+' und '-' Buttons neben der Anzahl der Karten für die jeweilige Veranstaltung kann die Anzahl verändert werden. 
 * Unten wird die Gesamtsumme aller Karten zusammen angezeigt.
 
+### Buy and Confirmation
+* Hier werden alle Tickets angezeigt, die zum Warenkorb hinzugefügt wurden als Liste (Cards) mit:
+  * Name der Veranstaltung
+  * Anzahl der Karten
+  * Preis der Karten
+  * Summe der Karten für die jeweilige Veranstaltung
+* Es wird ein Formular angezeigt mit Name- und Email-Feld.
+* Der 'Save'-Button speichert den Auftrag (falls alle Daten validiert wurden) in der Datenbank (im Order- und EventOrder Model. Und führt zur Confirmation-Seite.
+  * Die Confirmation Seite zeigt die Bestätigungsmeldung der Bestellung mit Bestell-Nummer an.
+* der 'Cancel'-Button führt ohne weitere Aktionen zum Warenkorb zurück.
+
 #### Login/Logout
 * wenn ausgeloggt:
   * Es ist im Menü das Navigations-Element 'Login' zu sehen.
@@ -226,7 +255,7 @@ UpdateCategoryForm eingebettet
 * Wenn eingeloggt:
   * Es ist im Menü das Navigations-Element 'Logout' zu sehen.
   * Mit Klick auf 'Logout' wird zur Logout Nachricht weitergeleitet und einem Link zum wieder einloggen.
-  
+
 ### Formulare
 
 * Die Formular HTML Datei ist einheitlich gestaltet und wird für alle Formularfunktionen der Anwendung genutzt und auf der jeweiligen Seite eingebettet.
