@@ -122,4 +122,7 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Import database settings from settings_local.py
-from .settings_local import *
+try:
+    from .settings_local import *
+except ImportError:
+    pass
