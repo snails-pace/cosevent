@@ -33,9 +33,16 @@ Source: https://getbootstrap.com/docs/5.0/utilities/flex/-->
         <p class="col" id="price">
             Total price: {{ total_price }}
         </p>
-        <div class="col justify-content-end d-grid">
-            <a href="{% url "buy" %}" class="btn btn-lg cart-btn">Buy</a>
-        </div>
+        <!-- Disable Buy-Button if nothing in the cart -->
+        {% if not session.cart %}
+            <div class="col justify-content-end d-grid">
+            <a href="{% url "buy" %}" class="btn btn-lg cart-btn disabled">Buy</a>
+            </div>
+        {% else %}
+            <div class="col justify-content-end d-grid">
+                <a href="{% url "buy" %}" class="btn btn-lg cart-btn">Buy</a>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 

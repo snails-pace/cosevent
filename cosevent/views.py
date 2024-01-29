@@ -212,6 +212,7 @@ def cart_update_view(request, pk, increment):
 
 def add_to_cart_view(request, pk):
     pk = str(pk)
+    # create a cart dictionary in sessions if it doesn't exist
     if 'cart' not in request.session:
         request.session['cart'] = {}
 
@@ -226,12 +227,14 @@ def add_to_cart_view(request, pk):
 def buy_view(request):
     """Buy tickets
 
-    POST: Validates the form and saves the new order if valid. Errors will be rendered if not valid
+    POST: Validates the form and saves the new order (Order Model and EventOrder Model) if valid.
+    Errors will be rendered if not valid
     """
 
     # Show tickets as in cart_view therefore add also list of tickets, where ticket is dict entry with count value from session
     tickets = []
     total_price = decimal.Decimal(0)
+    available = True
     if 'cart' in request.session.keys():
         cart = request.session['cart']
 
@@ -245,23 +248,35 @@ def buy_view(request):
             tickets.append({'event': event, 'name': event.name, 'price': event.price, 'count': value['count'],
                             'sum': sum_price})
             total_price += sum_price
+            if value['count'] > event.availability:
+                # raise Exception(f"Sorry, there are only {event.availability} tickets available for {event.name}.")
+                messages.warning(request, f"Sorry, there are only {event.availability} tickets available for {event.name}.")
+                available = False
 
     # if POST set total price and save Order model
     if request.method == 'POST':
         order_form = OrderForm(request.POST)
         if order_form.is_valid():
             try:
-                # set artist field manually to current user
+                # set price field manually to total_price and check if enough tickets are available
                 order_form.instance.total_price = total_price
+                if not available:
+                    raise Exception("Not enough tickets available.")
                 order = order_form.save()
-                #print(order)
-                #messages.success(request, "Event created")
 
-                # Create an EventOrder model for each Event - Order relationship
+                # Create an EventOrder model for each Event-Order-relationship
                 for ticket in tickets:
                     print(ticket)
-                    EventOrder.objects.create(event=ticket['event'], ticket_count=ticket['count'], price=ticket['sum'], order=order)
-                #
+                    try:
+                        event = ticket['event']
+
+                        event.availability = event.availability - int(ticket['count'])
+                        event.save()
+                        EventOrder.objects.create(event=ticket['event'], ticket_count=ticket['count'],
+                                                  price=ticket['sum'], order=order)
+
+                    except Event.DoesNotExist:
+                        continue
                 del request.session['cart']
                 request.session['order_nr'] = order.id
                 return redirect('purchased')
@@ -274,7 +289,7 @@ def buy_view(request):
     else:
         order_form = OrderForm()
 
-    context = {'form': order_form, 'title': 'Buy Tickets', 'session': request.session, 'tickets': tickets, 'total_price': total_price}
+    context = {'form': order_form, 'title': 'Buy Tickets', 'session': request.session, 'tickets': tickets, 'total_price': total_price, 'availability': available}
     return render(request, 'buy.html', context)
 
 
